@@ -7,26 +7,21 @@ const initMap = function() {
         zoom: 6
       });
 
-      const marker = new google.maps.Marker({
-        position: { lat: -34.397, lng: 150.644 },
-        map: map,
-        draggable:true,
-        title:"Drag me!"
-      });
+
 
       google.maps.event.addListener(map, "click", (event) => {
 
         const lat = event.latLng.toJSON().lat;
         const lng = event.latLng.toJSON().lng;
-        // console.log(typeof lat);
-
         console.log(lat, lng)
 
       //Add Marker
       function addMarker(location) {
         const marker = new google.maps.Marker({
         position: location,
-        map
+        map,
+        draggable: true
+        
         })
       }
         addMarker(event.latLng, map);

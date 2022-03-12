@@ -20,23 +20,24 @@ html, body {
 
 .info {
   height: 40vh;
-  border-radius: 10px;
+  width: 40vh;
+  box-sizing: border-box;
   background-color: rgba(60, 60, 60, 0.16);
   font-weight: 400;
   color: rgb(41, 41, 41);
   box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.25);
-  margin: auto;
+  margin: 1em;
   padding: 1em;
+  margin: auto;
+  word-break: break-word;
   font-family: 'Lato', sans-serif;
 }
 
 .map-spots {
   display: flex;
   flex-direction: column;
-  overflow-wrap: break-word;
-  justify-content: space-around;
 }
 
 .spot {
-  padding: 1em;
+padding: 0.5em;
 }
