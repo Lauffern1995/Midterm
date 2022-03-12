@@ -20,14 +20,7 @@
 
 </head>
 
-<nav>
-  <div class="nav-logo">MapWiki</div>
-  <div class="nav-prompt">
-    <div class="login">Login</div>
-    <div class="register">Register</div>
-    <div class="get-maps">Your <strong>MAPS</strong></div>
-  </div>
-</nav>
+<%- include('partials/header') %>
 
 <body>
   <div class="map-container">
@@ -43,6 +36,8 @@
       </div>
     </div>
     <div id="map"></div>
+
+
   </div>
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDtIjXHDQ9Blne5H3PfOpa1xohVP5gbpS4"
   async defer></script>

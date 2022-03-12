@@ -33,6 +33,7 @@ html, body {
 .map-spots {
   display: flex;
   flex-direction: column;
+  overflow-wrap: break-word;
   justify-content: space-around;
 }
 
