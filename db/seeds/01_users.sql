@@ -1,3 +1,8 @@
 -- Users table seeds here (Example)
-INSERT INTO users (name) VALUES ('Alice');
-INSERT INTO users (name) VALUES ('Kira');
+
+INSERT INTO users (name, email, password, country, province, city, street, postal_code, date_created)
+VALUES ('Noah', 'noah@noah.com', 'password', 'Canada', 'New Brunswick', 'Fredricton', 'Fart st' ,'E3A0A4', '12/03/2022'),
+('Guy', 'guydilena@gmail.com', 'password', 'Canada', 'Nova Scotia', 'Lunenburg', '123 Grim Rd', 'V8V9T4', '12/03/2022' ),
+('Alex', 'alex.gillespie@live.com', 'password', 'Canada', 'Ontario', 'Burlington', '666 Burg Rd', 'F7T4K3', '12/03/2022');
+
+
