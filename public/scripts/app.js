@@ -15,7 +15,7 @@
       var marker = new google.maps.Marker({
         position: location,
         map: map,
-        animation: google.maps.Animation.BOUNCE,
+        animation: google.maps.Animation.DROP,
         draggable: true,
       });
       var infowindow = new google.maps.InfoWindow({
