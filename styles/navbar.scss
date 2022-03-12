@@ -1,0 +1,40 @@
+nav {
+  padding: 1.5em;
+  height: 10vh;
+  width: 100vw;
+  background-color: #4056A1;
+  color: #FFFFFF;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 1;
+  position: sticky;
+  top: 0;
+}
+
+.nav-prompt {
+  width: 100%;
+  padding: 0 1em 0 1em;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  justify-content: flex-end;
+}
+
+.nav-prompt > div {
+  padding: 10px;
+  margin: 0.5em;
+  border: 1px solid #FFFFFF;
+  border-radius: 10%;
+}
+
+.nav-prompt > div:hover {
+  cursor: pointer;
+  background-color: whitesmoke;
+  color: black;
+}
+
+.nav-logo {
+  font-size: 2em;
+  font-family: serif;
+}

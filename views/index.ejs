@@ -2,22 +2,46 @@
 <html lang="en">
 
 <head>
-  <title>Home Page</title>
+  <title>MapWiki, the free location encyclopedia</title>
 
   <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
   <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
   <link rel="stylesheet" href="/styles/main.css" type="text/css" />
   <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
+  <link rel="stylesheet" href="/styles/navbar.css" type="text/css" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300&display=swap" rel="stylesheet">
 
   <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
   <script type="text/javascript" src="/scripts/app.js"></script>
 
 </head>
 
-
+<nav>
+  <div class="nav-logo">MapWiki</div>
+  <div class="nav-prompt">
+    <div class="login">Login</div>
+    <div class="register">Register</div>
+    <div class="get-maps">Your <strong>MAPS</strong></div>
+  </div>
+</nav>
 
 <body>
   <div class="map-container">
+    <div class="info">
+      <div class="info-title">
+        <h3>Toronto Spots</h3>
+      </div>
+      <div class="map-spots">
+          <div class="spot">CN Tower</div>
+          <div class="spot">Rogers Center</div>
+          <div class="spot">Ripleys Aquarium</div>
+          <div class="spot">Eaton Center</div>
+      </div>
+    </div>
     <div id="map"></div>
   </div>
   <script>
