@@ -1,23 +1,32 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <link rel="stylesheet" href="/styles/navbar.css" type="text/css" />
-  <link rel="stylesheet" href="/styles/login.css" type="text/css" />
-
-  <title>Document</title>
+	<title>Slide Navbar</title>
+	<link rel="stylesheet" href="/styles/login.css" type="text/css" />
+  <link href="https://fonts.googleapis.com/css2?family=Jost:wght@500&display=swap" rel="stylesheet">
 </head>
-<%- include('partials/header') %>
 <body>
-  <h1>Login</h1>
-  <form action="/login" method="POST">
-    <input type="email" placeholder="Enter Email">
-    <input type="password" placeholder="Enter Password">
-    <button type="submit">Login</button>
+	<div class="main">
+		<input type="checkbox" id="chk" aria-hidden="true">
 
-  </form>
+			<div class="signup">
+				<form>
+					<label for="chk" aria-hidden="true">Sign up</label>
+					<input type="text" name="txt" placeholder="User name" required="">
+					<input type="email" name="email" placeholder="Email" required="">
+					<input type="password" name="pswd" placeholder="Password" required="">
+					<button>Sign up</button>
+				</form>
+			</div>
+
+			<div class="login">
+				<form>
+					<label for="chk" aria-hidden="true">Login</label>
+					<input type="email" name="email" placeholder="Email" required="">
+					<input type="password" name="pswd" placeholder="Password" required="">
+					<button>Login</button>
+				</form>
+			</div>
+	</div>
 </body>
-</html
+</html>
