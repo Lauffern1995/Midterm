@@ -18,7 +18,6 @@ module.exports = (db) => {
           .send('Email already registered, Please <a href="/login">login!</a>');
         return;
       } else {
-        console.log('Huzzah!');
         console.log(data, 'data');
 
         let queryString = `
