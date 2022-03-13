@@ -1,29 +1,38 @@
 const express = require('express');
 const router  = express.Router();
 const cookieSession = require('cookie-session');
-
-
+const bodyParser = require('body-parser');
+const { checkLogin } = require('./helper_functions')
 
 
 module.exports = (db) => {
 
   router.post("/", (req, res) => {
+    // console.log(req.body)
+    // console.log(req.body.email);
 
+    if (checkLogin(req.body, db)) {
+      res.status(400)
+      .send('Email already registered, Please <a href="/login">login!</a>')
+      return;
+    } else {
+      console.log("Huzzah!");
 
+    }
 
   const { name, email, password } = req.body;
-  const date = Date.now();
+  // const date = Date.now();
 
-  let queryString = (`
-    INSERT INTO users (name, email, password, date_created)
-    VALUES ($1, $2, $3, now()::date) RETURNING *;
-  `);
-  db
-  .query(queryString, [req.body.name, req.body.email, req.body.password])
-  .then((data) =>
-    res.redirect("./"))
+  // req.session.user_id = users[newUserId].id;
 
-
+  // let queryString = (`
+  //   INSERT INTO users (name, email, password, date_created)
+  //   VALUES ($1, $2, $3, now()::date) RETURNING *;
+  // `);
+  // db
+  // .query(queryString, [req.body.name, req.body.email, req.body.password])
+  // .then((data) =>
+  //   res.redirect("./"))
 
   });
 
