@@ -45,8 +45,8 @@ const mapsRoute = require("./routes/maps");
 // ------- Routes Mounted -------
 
 app.use("/", indexRoute());
-app.use("/login", loginRoute());
-app.use("/register", registerRoute());
+app.use("/login", loginRoute(db));
+app.use("/register", registerRoute(db));
 app.use("/maps", mapsRoute(db));
 app.use("/api/users", usersRoute(db));
 

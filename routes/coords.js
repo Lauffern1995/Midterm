@@ -9,6 +9,15 @@ const express = require('express');
 const router  = express.Router();
 
 module.exports = (db) => {
+
+
+
+  google.maps.event.addListener(map, 'click', function(event) {
+    const lat = event.latLng.toJSON().lat;
+    const lng = event.latLng.toJSON().lng;
+    console.log(lat, lng)
+  });
+
   router.get("/", (req, res) => {
     let query = `SELECT * FROM widgets`;
     console.log(query);

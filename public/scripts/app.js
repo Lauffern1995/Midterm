@@ -9,7 +9,12 @@
 
     google.maps.event.addListener(map, 'click', function(event) {
       placeMarker(map, event.latLng);
+      const lat = event.latLng.toJSON().lat;
+      const lng = event.latLng.toJSON().lng;
+      console.log(lat, lng)
     });
+
+
 
     function placeMarker(map, location) {
       var marker = new google.maps.Marker({
@@ -32,9 +37,7 @@ const loadMap = function() {
    method: "GET",
   url: '/',
   })
-  .then(res => {
-  initMap();
-  })
+  .then(() => { initMap() })
   .catch(err => {
     console.log('err', err)
   })
