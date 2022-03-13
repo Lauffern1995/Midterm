@@ -1,12 +1,17 @@
 const express = require('express');
 const router  = express.Router();
+const cookieSession = require('cookie-session');
+
+
 
 
 module.exports = (db) => {
 
   router.post("/", (req, res) => {
+
+
+
   const { name, email, password } = req.body;
-  console.log(name, email, password)
   const date = Date.now();
 
   let queryString = (`
@@ -20,18 +25,7 @@ module.exports = (db) => {
 
 
 
-
-
-
-
-
-
   });
-
-
-
-
-
 
 
 
