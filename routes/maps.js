@@ -4,12 +4,31 @@ const cookieSession = require('cookie-session');
 const bodyParser = require('body-parser');
 const { getMap } = require('./helper_functions');
 
+
+
 module.exports = (db) => {
-  router.get('/', (req, res) => {
-    res.render('maps');
+  router.post('/', (req, res) => {
+   
+    const { title, description } = req.body;
+    console.log(req.body)
+
+    let queryString = (`
+      INSERT INTO maps (title, description, date_created)
+      VALUES ($1, $2, now()::date) RETURNING *;
+    `);
+    db
+    .query(queryString, [title, description])
+    .then((data) =>
+      res.redirect("./"))
+
   });
 
-  router.post('/', (req, res) => {
+  router.get('/', (req, res) => {
+    res.render('maps');
+
+  });
+
+  router.get('/', (req, res) => {
     const { title } = req.body;
     const map = getMap(title, db);
     map.then((data) => {
@@ -17,6 +36,11 @@ module.exports = (db) => {
     });
 
     res.render('maps');
+
+
+    
+
   });
+
   return router;
 };

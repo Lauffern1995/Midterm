@@ -7,6 +7,8 @@ const { getMap } = require('./helper_functions');
 
 module.exports = (db) => {
 
+  
+
   router.get('/', (req, res) => {
     console.log(req.body.title)
     const mapsInDb = getMap(req.body, db);

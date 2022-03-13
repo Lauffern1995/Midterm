@@ -51,7 +51,7 @@ const loginRoute = require("./routes/login");
 const registerRoute = require("./routes/register");
 const usersRoute = require("./routes/users");
 const mapsRoute = require("./routes/maps");
-const map_createRoute = require("./routes/map_create");
+// const map_createRoute = require("./routes/map_create");
 const map_listRoute = require("./routes/map_list");
 
 // ------- Routes Mounted -------
@@ -61,7 +61,7 @@ app.use("/login", loginRoute(db));
 app.use("/register", registerRoute(db));
 app.use("/maps", mapsRoute(db));
 app.use("/api/users", usersRoute(db));
-app.use("/map_create", map_createRoute(db));
+// app.use("/map_create", map_createRoute(db));
 app.use("/map_list", map_listRoute(db));
 
 // ------- Server Mounted -------

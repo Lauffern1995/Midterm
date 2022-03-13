@@ -4,24 +4,25 @@ const router = express.Router();
 
 
 
-module.exports = (db) => {
+// module.exports = (db) => {
+  
+//   router.post('/', (req, res) => {
+   
+//     const { title, description } = req.body;
+//     console.log(req.body)
 
-  router.post("/", (req, res) => {
-    console.log(req.body)
-    const { title, description } = req.body;
+//     let queryString = (`
+//       INSERT INTO maps (title, description, user_id)
+//       VALUES ($1, $2, now()::date) RETURNING *;
+//     `);
+//     db
+//     .query(queryString, [title, description, created_at])
+//     .then((data) =>
+//       res.redirect("./"))
 
-    let queryString = (`
-      INSERT INTO maps (title, description, user_id)
-      VALUES ($1, $2, now()::date) RETURNING *;
-    `);
-    db
-    .query(queryString, [title, description, created_at])
-    .then((data) =>
-      res.redirect("./"))
-
-});
-return router;
-};
+//   });
+//   return router;
+// };
 
 // DROP TABLE IF EXISTS maps CASCADE;
 // CREATE TABLE maps (
