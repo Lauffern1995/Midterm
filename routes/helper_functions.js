@@ -4,20 +4,20 @@
 
 const checkLogin = function (user, db) {
   return db.query(`
-  SELECT email
+  SELECT email, id
   FROM users
   WHERE email = $1;
   `, [`${user.email}`])
     .then (user => {
-
-      return user.rows[0];
-      })
-    .catch( error => {
-      console.log("caught ", error);
+      return(user.rows[0]);
     })
-}
+    .catch(err => {
+      console.log('err', err)
+    })
 
-// const getMap = function (db, map) {
+  }
+
+    // const getMap = function (db, map) {
 //   return db.query(`
 //   SELECT *
 //   FROM maps

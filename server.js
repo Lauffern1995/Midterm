@@ -9,7 +9,6 @@ const app = express();
 const morgan = require("morgan");
 const cookieSession = require('cookie-session');
 const bodyParser = require('body-parser');
-const urlencodedParser = bodyParser.urlencoded({ extended: false })
 
 // PG database client/connection setup
 const { Pool } = require("pg");
@@ -23,7 +22,7 @@ db.connect();
 app.use(morgan("dev"));
 
 app.set("view engine", "ejs");
-app.use(express.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(
   "/styles",
@@ -35,7 +34,6 @@ app.use(
 );
 
 app.use(express.static("public"));
-app.use(bodyParser.json())
 
 app.use(cookieSession({
 
@@ -61,7 +59,6 @@ app.use("/login", loginRoute(db));
 app.use("/register", registerRoute(db));
 app.use("/maps", mapsRoute(db));
 app.use("/api/users", usersRoute(db));
-
 
 
 // ------- Server Mounted -------

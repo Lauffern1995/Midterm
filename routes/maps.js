@@ -7,6 +7,7 @@ const router  = express.Router();
 module.exports = (db) => {
 
   router.post("/", (req, res) => {
+    console.log(req.body)
     const { title, description } = req.body;
 
     let queryString = (`
