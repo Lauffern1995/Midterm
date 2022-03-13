@@ -4,19 +4,22 @@ const cookieSession = require('cookie-session');
 const bodyParser = require('body-parser');
 const { getMap } = require('./helper_functions');
 
+
 module.exports = (db) => {
+
   router.get('/', (req, res) => {
-    res.render('maps');
-  });
-
-  router.post('/', (req, res) => {
-    const { title } = req.body;
-    const map = getMap(title, db);
-    map.then((data) => {
-      console.log(data.title);
-    });
-
-    res.render('maps');
-  });
+    console.log(req.body.title)
+    const mapsInDb = getMap(req.body, db);
+    mapsInDb.then((data) => {
+      console.log(data)
+      return data
+    })
+  })
   return router;
-};
+}
+
+
+
+
+
+
