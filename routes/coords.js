@@ -10,36 +10,32 @@
  */
 
 const express = require('express');
-const router  = express.Router();
+const router = express.Router();
+const { getCoords } = require('./helper_functions');
+const bodyParser = require('body-parser');
 
 // const { getCoordinates } = require('../public/scripts/app')
 // getCoordinates();
 
-
-
 module.exports = (db) => {
-
   // const getCoordinates = () => {
   //   const lat = event.latLng.toJSON().lat;
   //   const lng = event.latLng.toJSON().lng;
   //   console.log(lat, lng)
   //   }
 
+  router.post('/', (req, res) => {
+    const mapID = req.body.title;
+    console.log('mapid', mapID);
+    const coords = getCoords(mapID, db);
+    coords
+      .then((data) => {
+        console.log(data);
 
-
-
-  router.get("/", (req, res) => {
-    let query = `SELECT * FROM widgets`;
-    console.log(query);
-    db.query(query)
-      .then(data => {
-        const widgets = data.rows;
-        res.json({ widgets });
+        console.log('map/coords data', data);
       })
-      .catch(err => {
-        res
-          .status(500)
-          .json({ error: err.message });
+      .catch((err) => {
+        res.status(500).json({ error: err.message });
       });
   });
   return router;

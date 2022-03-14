@@ -18,7 +18,7 @@
 
   <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
   <script type="text/javascript" src="/scripts/app.js"></script>
-  
+
 
 </head>
 
@@ -28,14 +28,13 @@
   <div class="map-container">
     <div class="info">
       <%- include('partials/new_map') %>
+      <%- include('./coords') %>
       <div class="maps-form">
       </div>
       <div class="map-spots">
       </div>
     </div>
     <div id="map"></div>
-
-
   </div>
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDtIjXHDQ9Blne5H3PfOpa1xohVP5gbpS4"
   async defer></script>

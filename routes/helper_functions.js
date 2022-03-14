@@ -1,67 +1,105 @@
-
-
-
-
 // ***************** LOGIN/REGI HELPERS *******************//
 const checkLogin = function (user, db) {
-  return db.query(`
+  return db
+    .query(
+      `
   SELECT email, id
   FROM users
   WHERE email = $1;
-  `, [`${user.email}`])
-    .then (user => {
-      return(user.rows[0]);
+  `,
+      [`${user.email}`]
+    )
+    .then((user) => {
+      return user.rows[0];
     })
-    .catch(err => {
-      console.log('err', err)
-    })
-
-  }
-
+    .catch((err) => {
+      console.log('err', err);
+    });
+};
 
 // ******************* MAP HELPERS *********************//
 const getMap = function (map, db) {
-  return db.query(`
+  return db
+    .query(
+      `
   SELECT *
   FROM maps
   WHERE id = $1;
-  `, [map])
-  .then(res => res.rows[0]);
+  `,
+      [map]
+    )
+    .then((res) => res.rows[0]);
 };
 
+const getMapByLike = function (title, db) {
+  return db
+    .query(
+      `
+  SELECT *
+  FROM maps
+  WHERE title = $1;
+  `,
+      [title]
+    )
+
+    .then((res) => res.rows[0])
+
+    .catch((err) => {
+      console.log('ERR', err);
+    });
+};
+
+getUserMaps = function (user, db) {
+  return db
+    .query(
+      `
+    SELECT *
+    FROM maps
+    WHERE user_id = $1
+  `,
+      [user_id]
+    )
+    .then((res) => res.rows[0]);
+};
 
 const getFavs = function (user, db) {
-  return db.query(`
+  return db
+    .query(
+      `
   SELECT map_id
   FROM favourite_maps
   JOIN user ON user.id = user_id
   WHERE user_id = $1;
-  `, [user.id])
-  .then(res => res.rows[0]);
+  `,
+      [user.id]
+    )
+    .then((res) => res.rows[0]);
 };
 
-/* const insertCoords = function (placeholder, db) {
-  let queryString = (`
-  INSERT INTO coords (title, map_id, user_id, longitude, latitude, description)
-  VALUES ($1, $2, $3, $4, $5, $6) RETURNING *;
-  `);
-  return db.query(queryString, [title, map_id, user_id, longitude, latitude, description])
-  .then((data) => 
-   console.log(data);
-)}
-*/
+// const insertCoords = function (placeholder, db) {
+//   let queryString = (`
+//   INSERT INTO coords (title, map_id, user_id, longitude, latitude, description)
+//   VALUES ($1, $2, $3, $4, $5, $6) RETURNING *;
+//   `);
+//   return db.query(queryString, [title, map_id, user_id, longitude, latitude, description])
+//   .then((data) =>
+//    console.log(data);
+// )}
 
 // ******************* COORDS HELPERS *********************//
 
-const getPoints = function (map, db) {
-  return db.query(`
+const getCoords = function (map, db) {
+  return db
+    .query(
+      `
     SELECT longitude, latitude
     FROM coords
     WHERE map_id = $1;
-  ` [map])
-  .then(res => res.rows)
+  `,
+      [map]
+    )
+    .then((res) => res.rows[0]);
 };
-
 
 // const createMap = function(title, description) {
 
@@ -86,14 +124,10 @@ const getPoints = function (map, db) {
 //   last_edited_by INTEGER REFERENCES users(id) ON DELETE CASCADE
 // );
 
-
-
-
-
 module.exports = {
-checkLogin,
-getMap,
-getFavs,
-}
-
-
+  checkLogin,
+  getMap,
+  getFavs,
+  getMapByLike,
+  getCoords,
+};

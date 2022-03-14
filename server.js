@@ -53,6 +53,8 @@ const usersRoute = require("./routes/users");
 const mapsRoute = require("./routes/maps");
 // const map_createRoute = require("./routes/map_create");
 const map_listRoute = require("./routes/map_list");
+const mapsSearchRoute = require('./routes/maps_search')
+const mapWithCoords = require('./routes/coords')
 
 // ------- Routes Mounted -------
 
@@ -63,6 +65,8 @@ app.use("/maps", mapsRoute(db));
 app.use("/api/users", usersRoute(db));
 // app.use("/map_create", map_createRoute(db));
 app.use("/map_list", map_listRoute(db));
+app.use("/maps_search", mapsSearchRoute(db));
+app.use("/coords", mapWithCoords(db));
 
 // ------- Server Mounted -------
 

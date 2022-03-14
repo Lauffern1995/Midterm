@@ -1,8 +1,15 @@
 
 <div class="new-map-container">
-<form action="/maps" method="POST">
-  <input type="text" name="title" placeholder="Name your map!" required="">
-  <input type="text" name="description" placeholder="What's this map about?" required="">
-  <button>Add Map</button>
-</form>
+  <form action="/maps" method="POST">
+    <input type="text" name="title" placeholder="Name your map!" >
+    <input type="text" name="description" placeholder="What's this map about?">
+    <button>Add Map</button>
+  </form>
+
+
+  <form action="/maps_search" method="POST">
+    <input type="text" name="title" placeholder="Search map!" required="">
+    <button>Search Maps</button>
+  </form>
+
 </div>

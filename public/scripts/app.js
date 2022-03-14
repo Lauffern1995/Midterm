@@ -1,4 +1,4 @@
-const { insertCoords } = 
+// const { insertCoords } = require('../../routes/helper_functions');
 
 // Client facing scripts here
 
@@ -10,6 +10,7 @@ const initMap = function() {
   });
   const latArr = [];
   const lngArr = [];
+  const latLngArr = [];
 
 
 
@@ -27,8 +28,8 @@ const initMap = function() {
     placeMarker(map, event.latLng);
     const lat = event.latLng.toJSON().lat;
     const lng = event.latLng.toJSON().lng;
-    latArr.push(lat);
-    lngArr.push(lng);
+    latLngArr.push(event.latLng.toJSON())
+
 
     // console.log(lat, lng)
 
@@ -50,7 +51,7 @@ const initMap = function() {
         '<br>Longitude: ' + location.lng()
       });
       infowindow.open(map,marker);
-      console.log(latArr, lngArr)
+      console.log(latLngArr)
 
     }
   }
