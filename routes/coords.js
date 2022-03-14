@@ -26,11 +26,10 @@ module.exports = (db) => {
 
   router.post('/', (req, res) => {
     const mapID = req.body.title;
-    console.log('mapid', mapID);
     const coords = getCoords(mapID, db);
     coords
       .then((data) => {
-        console.log(data);
+        // -------- Pass Long, Lat to google api ↓ --------
 
         console.log('map/coords data', data);
       })

@@ -98,8 +98,33 @@ const getCoords = function (map, db) {
   `,
       [map]
     )
-    .then((res) => res.rows[0]);
+    .then((res) => res.rows);
 };
+
+//********************** LATLNG L00P**********************/
+
+const testPins = [
+  { longitude: '47.5706', latitude: '47.5706' },
+  { longitude: '47.5678', latitude: '47.2347' },
+  { longitude: '47.5234', latitude: '47.7686' },
+  { longitude: '47.7866', latitude: '47.3456' },
+];
+
+const pinDropper = function (results) {
+  return JSON.stringify(results);
+
+  // return results.map((pin) => {
+  //   return [pin.latitude, pin.longitude];
+  //   // return new google.maps.LatLng(pin.latitude, pin.longitude);
+  // });
+
+  // new google.maps.Marker({
+  //   position: latLng,
+  //   map: map,
+  // });
+};
+
+console.log(pinDropper(testPins));
 
 // const createMap = function(title, description) {
 
@@ -130,4 +155,5 @@ module.exports = {
   getFavs,
   getMapByLike,
   getCoords,
+  pinDropper,
 };
