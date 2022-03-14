@@ -40,6 +40,16 @@ const getFavs = function (user, db) {
   .then(res => res.rows[0]);
 };
 
+/* const insertCoords = function (placeholder, db) {
+  let queryString = (`
+  INSERT INTO coords (title, map_id, user_id, longitude, latitude, description)
+  VALUES ($1, $2, $3, $4, $5, $6) RETURNING *;
+  `);
+  return db.query(queryString, [title, map_id, user_id, longitude, latitude, description])
+  .then((data) => 
+   console.log(data);
+)}
+*/
 
 // ******************* COORDS HELPERS *********************//
 

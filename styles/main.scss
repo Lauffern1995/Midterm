@@ -11,10 +11,14 @@ html, body {
   padding: 1em;
 }
 
+
 #map {
   height: 70vh;
   width: 70vh;
   margin: 1.5rem;
+  border: 2px solid hsl(261, 40%, 39%);
+  box-shadow: 5px 20px 50px rgba(0, 0, 0, 0.776);
+  border-radius: 1em;
   z-index: 9999;
 }
 
@@ -27,7 +31,6 @@ html, body {
   overflow: hidden;
   background: url("https://doc-08-2c-docs.googleusercontent.com/docs/securesc/68c90smiglihng9534mvqmq1946dmis5/fo0picsp1nhiucmc0l25s29respgpr4j/1631524275000/03522360960922298374/03522360960922298374/1Sx0jhdpEpnNIydS4rnN4kHSJtU1EyWka?e=view&authuser=0&nonce=gcrocepgbb17m&user=03522360960922298374&hash=tfhgbs86ka6divo3llbvp93mg4csvb38");
   box-shadow: 5px 20px 50px rgba(0, 0, 0, 0.776);
-  box-sizing: border-box;
   font-weight: 400;
   margin: auto;
   word-break: break-word;
@@ -36,27 +39,21 @@ html, body {
 }
 
 .map-spots {
-  display: f-ex;
+  display: flex;
   flex-direction: column;
 }
 
-.spot {
-padding: 0.5em;
-}
 
-form {
 
-	width: 60%;
-	background: #e0dede;
-	justify-content: center;
-	display: flex;
+
+.new-map-container > form {
+  
+  display: flex;
   flex-direction: column;
-	padding: 10px;
-	outline: none;
-	
+  justify-content: center; 
+   margin: 20px;
 }
 
 
-input {
-  flex-direction: ;
-}
+
+

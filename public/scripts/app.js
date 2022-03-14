@@ -1,3 +1,4 @@
+const { insertCoords } = 
 
 // Client facing scripts here
 
