@@ -18,6 +18,18 @@ const checkLogin = function (user, db) {
 };
 
 // ******************* MAP HELPERS *********************//
+const getAllMaps = function (db) {
+  return db
+    .query(
+      `
+  SELECT title
+  FROM maps
+  `
+    )
+    .then((res) => res.rows);
+};
+
+
 const getMap = function (map, db) {
   return db
     .query(
@@ -116,7 +128,7 @@ const pinDropper = function (results) {
   });
 };
 
-console.log(pinDropper(testPins));
+// console.log(pinDropper(testPins));
 
 // const createMap = function(title, description) {
 
@@ -148,4 +160,5 @@ module.exports = {
   getMapByLike,
   getCoords,
   pinDropper,
+  getAllMaps,
 };

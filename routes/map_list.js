@@ -2,26 +2,32 @@ const express = require('express');
 const router = express.Router();
 const cookieSession = require('cookie-session');
 const bodyParser = require('body-parser');
-const { getMap } = require('./helper_functions');
+const { getAllMaps } = require('./helper_functions');
+
+
+
 
 
 module.exports = (db) => {
 
-  
 
-  router.get('/', (req, res) => {
-    console.log(req.body.title)
-    const mapsInDb = getMap(req.body, db);
-    mapsInDb.then((data) => {
-      console.log(data)
-      return data
+  router.post('/', (req, res) => {
+
+    let templateVars = null;
+
+    mapList = getAllMaps(db)
+    mapList.then(data => {
+
+      templateVars = { map: data}
     })
+    console.log(templateVars)
+
+
+
+    return res.render('maps', templateVars);
+
   })
+
   return router;
 }
-
-
-
-
-
 

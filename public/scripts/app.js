@@ -22,11 +22,11 @@ const initMap = function () {
       animation: google.maps.Animation.DROP,
       draggable: true,
     });
-    const infowindow = new google.maps.InfoWindow({
-      content:
-        'Latitude: ' + location.lat() + '<br>Longitude: ' + location.lng(),
-    });
-    infowindow.open(map, marker);
+    // const infowindow = new google.maps.InfoWindow({
+    //   content:
+    //     'Latitude: ' + location.lat() + '<br>Longitude: ' + location.lng(),
+    // });
+    // infowindow.open(map, marker);
   }
 };
 
@@ -35,11 +35,23 @@ const customMaps = function (results) {
 
   const testPins = results
 
+  function addInfoWindow(marker, message) {
+
+    var infoWindow = new google.maps.InfoWindow({
+        content: message
+    });
+
+    google.maps.event.addListener(marker, 'click', function () {
+        infoWindow.open(map, marker);
+    });
+}
+
   for (i = 0; i < testPins.length; i++) {
+    addInfoWindow(marker,testPins[i][3])
     marker = new google.maps.Marker({
       position: new google.maps.LatLng(testPins[i][0], testPins[i][1]),
       map: map
-      
+
     })
   }
 };

@@ -9,10 +9,6 @@ const cookieSession = require('cookie-session')
 // Best practices on querying api using database data
 
 
-
-
-
-
 module.exports = () => {
   router.get("/", (req, res) => {
   let templateVars = {

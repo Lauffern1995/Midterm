@@ -2,14 +2,12 @@ const express = require('express');
 const router = express.Router();
 const cookieSession = require('cookie-session');
 const bodyParser = require('body-parser');
-const { getMap } = require('./helper_functions');
+const { getMap, getAllMaps } = require('./helper_functions');
+const { Template } = require('ejs');
 
 module.exports = (db) => {
   router.post('/', (req, res) => {
     const { title, description } = req.body;
-    console.log('title:', title);
-    console.log('desc:', description);
-
     let queryString = `
       INSERT INTO maps (title, description, date_created)
       VALUES ($1, $2, now()::date) RETURNING *;
@@ -20,13 +18,20 @@ module.exports = (db) => {
   });
 
   router.get('/', (req, res) => {
-    const { title } = req.body;
-    const map = getMap(title, db);
-    map.then((data) => {
-      console.log(data.title);
-    });
 
-    res.render('maps');
+
+    let templateVars = {}
+
+    mapList = getAllMaps(db)
+    mapList.then(data => {
+    //  console.log(data)
+     templateVars = { data: data }
+
+
+     res.render('maps', templateVars);
+    })
+
+
   });
 
   router.get('/:id', (req, res) => {});
