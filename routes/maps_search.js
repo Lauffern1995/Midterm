@@ -5,18 +5,17 @@ const bodyParser = require('body-parser');
 const { getMapByLike } = require('./helper_functions');
 
 module.exports = (db) => {
-
-  router.post('/', (req, res) => {
+  router.get('/', (req, res) => {
 
     const { title } = req.body;
+
     const search = getMapByLike(title, db);
-    search.then(data => {
+    search.then((data) => {
 
-      console.log(data.title);
-
-    })
-
-  })
+      console.log(hello)
+    // res.render();
+    });
+  });
 
   return router;
 };

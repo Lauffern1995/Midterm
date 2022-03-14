@@ -8,7 +8,6 @@ const initMap = function () {
   });
 
   /////////********LISTENS FOR CLICKS AND PLACE MARKERS********/////////////
-
   google.maps.event.addListener(map, 'click', function (event) {
     placeMarker(map, event.latLng);
   });
@@ -28,50 +27,44 @@ const initMap = function () {
     // });
     // infowindow.open(map, marker);
   }
+  const customMaps = function (results) {
+    const testPins = results;
+
+    function addInfoWindow(marker, message) {
+      var infoWindow = new google.maps.InfoWindow({
+        content: message,
+      });
+
+      google.maps.event.addListener(marker, 'click', function () {
+        infoWindow.open(map, marker);
+      });
+    }
+
+    for (i = 0; i < testPins.length; i++) {
+      addInfoWindow(marker, testPins[i][2]);
+      marker = new google.maps.Marker({
+        position: new google.maps.LatLng(testPins[i][0], testPins[i][1]),
+        map: map,
+      });
+    }
+  };
 };
 
 ///////*******DROPS MULTIPLE PINS******///////////
-const customMaps = function (results) {
 
-  const testPins = results
-
-  function addInfoWindow(marker, message) {
-
-    var infoWindow = new google.maps.InfoWindow({
-        content: message
-    });
-
-    google.maps.event.addListener(marker, 'click', function () {
-        infoWindow.open(map, marker);
-    });
-}
-
-  for (i = 0; i < testPins.length; i++) {
-    addInfoWindow(marker,testPins[i][3])
-    marker = new google.maps.Marker({
-      position: new google.maps.LatLng(testPins[i][0], testPins[i][1]),
-      map: map
-
+const loadMap = function () {
+  $.ajax({
+    method: 'GET',
+    url: '/',
+  })
+    .then(() => {
+      initMap();
     })
-  }
+    .catch((err) => {
+      console.log('err', err);
+    });
 };
 
-
-    const loadMap = function () {
-      $.ajax({
-        method: 'GET',
-        url: '/',
-      })
-        .then(() => {
-          initMap();
-          customMaps();
-        })
-        .catch((err) => {
-          console.log('err', err);
-        });
-    };
-
-    $(document).ready(function () {
-      loadMap();
-    });
-
+$(document).ready(function () {
+  loadMap();
+});

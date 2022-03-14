@@ -22,11 +22,9 @@ module.exports = (db) => {
 
     let templateVars = {}
 
-    mapList = getAllMaps(db)
+    mapList = getAllMaps(db);
     mapList.then(data => {
-    //  console.log(data)
      templateVars = { data: data }
-
 
      res.render('maps', templateVars);
     })
@@ -34,7 +32,9 @@ module.exports = (db) => {
 
   });
 
-  router.get('/:id', (req, res) => {});
+  router.post('/:SHORTurl', (req, res) => {
+
+  });
 
   return router;
 };
