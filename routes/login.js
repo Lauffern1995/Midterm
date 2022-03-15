@@ -5,22 +5,33 @@ const bodyParser = require('body-parser');
 const { checkLogin } = require('./helper_functions');
 
 module.exports = (db) => {
+
+
+
   router.get('/', (req, res) => {
-    let queryString = `
-  SELECT *
-  FROM users
-  `;
-    db.query(queryString).then((data) => console.log());
-    res.render('login');
+
+    if(req.session.id) {
+      res.redirect('/')
+    }
+
+
+    res.render('login')
+
   });
+
+
 
   router.post('/', (req, res) => {
     if (req.session.id) {
+      const templateVars = { user: user[req.session.id] }
+
+      console.log('Template Vars in ----> login', templateVars)
+
       const isEmailInDb = checkLogin(req.body, db);
       isEmailInDb
         .then((data) => {
           if (req.session.id === data.id) {
-            res.redirect('/');
+            res.render('/', templateVars);
           } else {
             res.status(400).send('Email does not exist');
             return;

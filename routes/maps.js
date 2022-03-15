@@ -4,9 +4,25 @@ const cookieSession = require('cookie-session');
 const bodyParser = require('body-parser');
 const { getMap, getAllMaps } = require('./helper_functions');
 const { Template } = require('ejs');
-const res = require('express/lib/response');
+
 
 module.exports = (db) => {
+
+  router.use((req, res, next) => {
+    if (!req.session.id) {
+      res.redirect('/login');
+    }
+    console.log('Testing ---> Check user');
+    next();
+  });
+  router.use((req, res, next) => {
+    if (!req.session.user) {
+      
+    }
+  })
+
+
+
   router.post('/', (req, res) => {
     const { title, description } = req.body;
     let queryString = `
@@ -19,6 +35,7 @@ module.exports = (db) => {
   });
 
   router.get('/', (req, res) => {
+
     let templateVars = {};
 
     mapList = getAllMaps(db);

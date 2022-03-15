@@ -39,7 +39,7 @@
         <!-- remove this if in the way -->
         <%- include('partials/test') %>
 
-        <% if (data) { %>
+        <% if (locals.data) { %>
           <ul id="map-list">
             <% data.map(function(maps, i){ %>
             <li>
