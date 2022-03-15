@@ -36,6 +36,9 @@
           <button type="submit">List Your Maps!</button>
         </form>
 
+        <!-- remove this if in the way -->
+        <%- include('partials/test') %>
+
         <% if (data) { %>
           <ul id="map-list">
             <% data.map(function(maps, i){ %>
