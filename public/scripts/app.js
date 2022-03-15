@@ -21,17 +21,24 @@ const initMap = function () {
       animation: google.maps.Animation.DROP,
       draggable: true,
     });
-    // const infowindow = new google.maps.InfoWindow({
-    //   content:
-    //     'Latitude: ' + location.lat() + '<br>Longitude: ' + location.lng(),
-    // });
-    // infowindow.open(map, marker);
+    const infowindow = new google.maps.InfoWindow({
+      content:
+        'Latitude: ' + location.lat() + '<br>Longitude: ' + location.lng(),
+    });
+    infowindow.open(map, marker);
   }
+  const testPins = [
+    { longitude: '47.5706', latitude: '47.5706', map_id: 3 },
+    { longitude: '47.5678', latitude: '47.2347', map_id: 3 },
+    { longitude: '47.5234', latitude: '47.7686', map_id: 3 },
+    { longitude: '47.7866', latitude: '47.3456', map_id: 3 },
+  ];
+
   const customMaps = function (results) {
-    function addInfoWindow(marker, message) {
-      var infoWindow = new google.maps.InfoWindow({
-        content: message,
-      });
+    // function addInfoWindow(marker, message) {
+      // var infoWindow = new google.maps.InfoWindow({
+      //   content: message,
+      // });
 
       google.maps.event.addListener(marker, 'click', function () {
         infoWindow.open(map, marker);
@@ -39,16 +46,21 @@ const initMap = function () {
     }
 
     for (i = 0; i < testPins.length; i++) {
-      addInfoWindow(marker, testPins[i][2]);
+      // addInfoWindow(marker, testPins[i][2]);
       marker = new google.maps.Marker({
         position: new google.maps.LatLng(testPins[i][0], testPins[i][1]),
         map: map,
       });
-    }
+    // }
   };
 };
 
+
+
 ///////*******DROPS MULTIPLE PINS******///////////
+
+
+
 
 const loadMap = function () {
   $.ajax({
@@ -65,4 +77,5 @@ const loadMap = function () {
 
 $(document).ready(function () {
   loadMap();
+  customMaps(testPins);
 });

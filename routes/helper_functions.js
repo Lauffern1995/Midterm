@@ -50,12 +50,12 @@ const getMapByLike = function (title, db) {
       `
   SELECT *
   FROM maps
-  WHERE title = $1;
+  WHERE title LIKE $1;
   `,
-      [title]
+      ['%' + title + '%']
     )
 
-    .then((res) => res.rows[0])
+    .then((res) => res.rows)
 
     .catch((err) => {
       console.log('ERR', err);
@@ -77,18 +77,19 @@ getUserMaps = function (user_id, db) {
 };
 
 // ------ Get Favorite Maps for User ------
-const getFavs = function (user, db) {
+const getFavs = function (user_id, db) {
   return db
     .query(
       `
-  SELECT map_id
-  FROM favourite_maps
-  JOIN user ON user.id = user_id
-  WHERE user_id = $1;
+  SELECT maps.title
+  FROM maps
+  JOIN users ON users.id = maps.user_id
+  JOIN favourite_maps ON users.id = favourite_maps.user_id
+  WHERE users.id = $1;
   `,
-      [user.id]
+      [user_id]
     )
-    .then((res) => res.rows[0]);
+    .then((res) => res.rows);
 };
 
 // const insertCoords = function (placeholder, db) {

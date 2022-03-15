@@ -34,28 +34,34 @@ module.exports = (db) => {
   // ------ Get Users Favorite Maps (List) ------
   router.post('/fav_maps', (req, res) => {
     let templateVars = { user: req.session.id };
-
+    let user_id = req.session.id
     console.log(templateVars, ' Template Vars from /fav_map ');
 
-    const mapList = getFavs(db);
-    mapList.then((data) => {
-      templateVars = { user: req.session.id, data: data };
+    const mapList = getFavs(user_id, db);
+    mapList.then((maps) => {
+        console.log()
+      templateVars = { user: req.session.id, maps: maps };
 
       res.render('index', templateVars);
     });
+
   });
 
   // ------ Get Searched Map (Single) ------
   router.post('/search_map', (req, res) => {
+
     let templateVars = { user: req.session.id };
+
+    let { title } = req.body;
 
     console.log(templateVars, ' Template Vars from /search_map ');
 
     const search = getMapByLike(title, db);
-    search.then((data) => {
-      templateVars = { user: req.session.id, data: data };
+    search.then((maps) => {
+      templateVars = { user: req.session.id, maps: maps };
       res.render('index', templateVars);
     });
+
   });
 
   // ------ Create A Map ------
