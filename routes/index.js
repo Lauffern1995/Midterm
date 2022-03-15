@@ -7,6 +7,7 @@ const {
   getMapByLike,
   getFavs,
   getCoords,
+  getMapCoordsByTitle,
 } = require('./helper_functions');
 const coords = require('./coords');
 
@@ -71,19 +72,38 @@ module.exports = (db) => {
   });
 
   // ------ Get Searched Map (Single) ------
-  router.post('/search_map', (req, res) => {
+  router.post('/:map', (req, res) => {
 
     let templateVars = { user: req.session.id };
 
     let { title } = req.body;
 
-    console.log(templateVars, ' Template Vars from /search_map ');
+    // console.log(templateVars, ' Template Vars from /search_map ');
 
     const search = getMapByLike(title, db);
     search.then((maps) => {
       templateVars = { user: req.session.id, maps: maps };
       res.render('index', templateVars);
     });
+
+  });
+
+
+
+  router.get('/:mapname', (req, res) => {
+
+    const mapName = req.params
+    const coords = getMapCoordsByTitle(mapName, db);
+    coords.then(coords => {
+     
+      res.json({coords: coords})
+
+    })
+
+
+
+
+
 
   });
 

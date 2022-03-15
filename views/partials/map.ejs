@@ -7,7 +7,7 @@
       <% maps.map(function(map, i){ %>
       <li>
           <% console.log('inside ejs', map.title) %>
-           <%- `<a href=''>${map.title}</a>` %>
+           <%- `<a href='${map.title}'>${map.title}</a>` %>
           </li>
           <% }); %>
         </ul>

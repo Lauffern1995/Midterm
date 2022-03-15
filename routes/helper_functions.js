@@ -117,14 +117,25 @@ const getCoords = function (map, db) {
     .then((res) => res.rows);
 };
 
+
+const getMapCoordsByTitle = function (map, db) {
+
+  return db
+    .query(
+      `
+    SELECT longitude, latitude
+    FROM coords
+    JOIN maps ON maps.id = coords.map_id
+    WHERE maps.title = $1;
+  `,
+      [map.mapname]
+    )
+    .then((res) => res.rows);
+};
+
 //********************** LATLNG L00P**********************/
 
-const testPins = [
-  { longitude: '47.5706', latitude: '47.5706', map_id: 3 },
-  { longitude: '47.5678', latitude: '47.2347', map_id: 3 },
-  { longitude: '47.5234', latitude: '47.7686', map_id: 3 },
-  { longitude: '47.7866', latitude: '47.3456', map_id: 3 },
-];
+
 
 const pinDropper = function (results) {
   return results.map((pin) => {
@@ -166,4 +177,5 @@ module.exports = {
   pinDropper,
   getAllMaps,
   getUserMaps,
+  getMapCoordsByTitle,
 };
