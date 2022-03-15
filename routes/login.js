@@ -13,6 +13,7 @@ module.exports = (db) => {
     db.query(queryString).then((data) => console.log());
     res.render('login');
   });
+
   router.post('/', (req, res) => {
     if (req.session.id) {
       const isEmailInDb = checkLogin(req.body, db);

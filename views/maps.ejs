@@ -9,6 +9,7 @@
   <!-- <link rel="stylesheet" href="/styles/login.css" type="text/css" /> -->
   <script type="text/javascript" src="/routes/map_list.js"></script>
   <script type="text/javascript" src="/routes/maps.js"></script>
+  <script type="text/javascript" src="/maps/maps_search.js"></script>
 
   <title>Document</title>
 </head>
@@ -36,9 +37,9 @@
   </form>
 </div>
       <div class="user-maps-list">
-        <button action="/map-search" method="POST">CLICK ME BOI</button>
-        <form method="" action="">
 
+        <form action="maps/maps_search" method="POST">
+          <button >CLICK ME BOI</button>
         </form>
         <ul id="map-list">
         <% data.map(function(maps, i){ %>

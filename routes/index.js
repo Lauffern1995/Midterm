@@ -1,24 +1,44 @@
 const express = require('express');
-const router  = express.Router();
-const cookieSession = require('cookie-session')
+const router = express.Router();
+const cookieSession = require('cookie-session');
+const { getAllMaps } = require('./helper_functions');
 
-// How to query selector and append
+module.exports = (db) => {
+  router.get('/', (req, res) => {
+    let templateVars = {
+      user: req.session.user_id,
+    };
 
-// Can you have more than one get/post in each route file
+    mapList = getAllMaps(db);
+    mapList.then((data) => {
+      templateVars = { user: req.session.user_id, data: data };
+      res.render('index', templateVars);
+    });
+  });
 
-// Best practices on querying api using database data
+  // ------ Get Users Created Maps ------
+  router.get('/getusermaps', (req, res) => {
+    let templateVars = {};
+    console.log(templateVars, ' Template Vars from /getusermaps ');
 
+    mapList = getAllMaps(db);
+    mapList.then((data) => {
+      templateVars = { data: data };
+      res.render('index', templateVars);
+    });
+  });
 
-module.exports = () => {
-  router.get("/", (req, res) => {
-  let templateVars = {
+  router.post('/search_map', (req, res) => {
+    console.log('maps search');
+  });
 
-  user: req.session.user_id,
+  router.post('/fav_map', (req, res) => {
+    console.log('maps fav');
+  });
 
-  };
+  router.post('/pop_map', (req, res) => {
+    console.log('maps search');
+  });
 
-res.render('index', templateVars);
-});
-return router;
+  return router;
 };
-

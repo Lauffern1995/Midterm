@@ -28,8 +28,6 @@ const initMap = function () {
     // infowindow.open(map, marker);
   }
   const customMaps = function (results) {
-    const testPins = results;
-
     function addInfoWindow(marker, message) {
       var infoWindow = new google.maps.InfoWindow({
         content: message,

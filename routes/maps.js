@@ -4,6 +4,7 @@ const cookieSession = require('cookie-session');
 const bodyParser = require('body-parser');
 const { getMap, getAllMaps } = require('./helper_functions');
 const { Template } = require('ejs');
+const res = require('express/lib/response');
 
 module.exports = (db) => {
   router.post('/', (req, res) => {
@@ -18,22 +19,18 @@ module.exports = (db) => {
   });
 
   router.get('/', (req, res) => {
-
-
-    let templateVars = {}
+    let templateVars = {};
 
     mapList = getAllMaps(db);
-    mapList.then(data => {
-     templateVars = { data: data }
-
-     res.render('maps', templateVars);
-    })
-
-
+    mapList.then((data) => {
+      templateVars = { data: data };
+      res.render('index', templateVars);
+    });
   });
 
-  router.post('/:SHORTurl', (req, res) => {
-
+  router.post('/maps_search', (req, res) => {
+    console.log('test!!!!!!!!!!!!!');
+    res.redirect('/');
   });
 
   return router;

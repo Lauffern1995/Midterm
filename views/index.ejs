@@ -32,17 +32,27 @@
       <div class="maps-form">
       </div>
       <div class="user-maps-list">
-        <form method="" action="">
-          <button>List Your Maps!</button>
+        <form method="post" action="/getusermaps">
+          <button type="submit">List Your Maps!</button>
         </form>
-          <ul id="map-list">
 
+        <% if (data) { %>
+          <ul id="map-list">
+            <% data.map(function(maps, i){ %>
+            <li>
+                 <%- `<a href=''>${data[i].title}</a>` %>
+                </li>
+                <% }); %>
+              </ul>
+          <% } else { %>
+          <ul id="map-list">
           </ul>
-        </form>
+          <% } %>
       </div>
     </div>
     <div id="map"></div>
   </div>
+
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDtIjXHDQ9Blne5H3PfOpa1xohVP5gbpS4"
   async defer></script>
 </body>
