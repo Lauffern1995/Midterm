@@ -1,15 +1,46 @@
-<div class="user-maps-list">
-  <% if (locals.maps) { %>
-    <ul id="map-list">
-      <% maps.map(function(map, i){ %>
-      <li>
-          <% console.log('inside ejs', map.title) %>
-           <%- `<a href=''>${map.title}</a>` %>
-          </li>
-          <% }); %>
-        </ul>
-    <% } else { %>
-    <ul id="map-list">
-    </ul>
-    <% } %>
+<link rel="stylesheet" href="/styles/map-options.css" type="text/css" />
+
+<div class="map-options-container" style="border: 2px solid black">
+
+  <div class="form-container">
+    <form action="/create_map" method="POST">
+      <input type="text" name="title" placeholder="Name your map!" >
+      <input type="text" name="description" placeholder="What's this map about?">
+      <button>Add Map</button>
+    </form>
+  </div>
+
+  <div class="form-container">
+    <form action="/update_map" method="POST">
+      <div class="form-input">
+        <input class="map-form-input" type="input" id="update-title" name="title" placeholder="Update your map!" >
+        <label for="update-title" class="form__label">Title</label>
+      </div>
+      <div class="form-input">
+        <input class="map-form-input" type="text" id="update-description" name="description" placeholder="Update Desc">
+        <label for="update-description" class="form__label">description</label>
+      </div>
+      <div class="form-input">
+        <input class="map-form-input" type="text" id="update-map_id" name="map_id" placeholder="Which Map">
+        <label for="update-map_id" class="form__label">Name</label>
+      </div>
+        <button>Update Map</button>
+    </form>
+  </div>
+
+    <form action="/user_maps" method="POST">
+      <button>Get Your Maps!</button>
+    </form>
+
+    <form action="/fav_maps" method="POST" class="map_form">
+      <input type="text" name="title" placeholder="Get Your Fav Maps!">
+      <button>Fav Maps</button>
+    </form>
+
+    <form action="/search_map" method="POST" class="map_form">
+      <input type="text" name="title" placeholder="Search For Map!">
+      <button>Search Maps</button>
+    </form>
+
+
 </div>

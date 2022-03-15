@@ -5,40 +5,18 @@ const bodyParser = require('body-parser');
 const { getMap, getAllMaps } = require('./helper_functions');
 const { Template } = require('ejs');
 
-
 module.exports = (db) => {
+  // router.get('/', (req, res) => {
 
-  router.use((req, res, next) => {
-    if (!req.session.id) {
-      res.redirect('/login');
-    }
-    console.log('Testing ---> Check user');
-    next();
-  });
-  router.use((req, res, next) => {
-    if (!req.session.user) {
+  //   let user_id = req.session.id
+  //   let templateVars = {user: req.session.id};
 
-    }
-  })
-
-
-
-
-  router.get('/', (req, res) => {
-
-    let templateVars = {};
-
-    mapList = getAllMaps(db);
-    mapList.then((data) => {
-      templateVars = { data: data };
-      res.render('index', templateVars);
-    });
-  });
-
-  router.post('/maps_search', (req, res) => {
-    console.log('test!!!!!!!!!!!!!');
-    res.redirect('/');
-  });
+  //   mapList = getUserMaps(user_id, db);
+  //   mapList.then((maps) => {
+  //     templateVars = { user: req.session.id, maps: maps }
+  //     res.render('index', templateVars);
+  //   })
+  // });
 
   return router;
 };

@@ -1,0 +1,18 @@
+<link rel="stylesheet" href="/styles/map.css" type="text/css" />
+
+
+<div class="user-maps-list">
+  <% if (locals.maps) { %>
+    <ul id="map-list">
+      <% maps.map(function(map, i){ %>
+      <li>
+          <% console.log('inside ejs', map.title) %>
+           <%- `<a href=''>${map.title}</a>` %>
+          </li>
+          <% }); %>
+        </ul>
+    <% } else { %>
+    <ul id="map-list">
+    </ul>
+    <% } %>
+</div>

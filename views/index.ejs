@@ -18,23 +18,18 @@
   <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
   <script type="text/javascript" src="/scripts/app.js"></script>
 
-
-
 </head>
 
 <%- include('partials/header') %>
 
 <body>
   <div class="map-container">
-    <div class="info" style="border: 2px solid black">
-      <%- include('partials/new_map') %>
-    </div>
-    <%- include('partials/header') %>
-    <div class="map-and-list">
-      <div id="map"></div>
-    </div>
+    <%- include('partials/map-options') %>
+  <div class="map-and-list">
+    <div id="map"></div>
+    <%- include('partials/map') %>
   </div>
-  </div>
+</div>
   <%- include('partials/footer') %>
 </body>
 </html>
