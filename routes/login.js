@@ -58,3 +58,5 @@ module.exports = (db) => {
   });
   return router;
 };
+
+const test = 4;
