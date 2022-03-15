@@ -29,7 +29,7 @@ const getAllMaps = function (db) {
     .then((res) => res.rows);
 };
 
-
+// ------ Search For A Map by ID ------
 const getMap = function (map, db) {
   return db
     .query(
@@ -43,6 +43,7 @@ const getMap = function (map, db) {
     .then((res) => res.rows[0]);
 };
 
+// ------ Search For A Map by Title ------
 const getMapByLike = function (title, db) {
   return db
     .query(
@@ -61,6 +62,7 @@ const getMapByLike = function (title, db) {
     });
 };
 
+// ------ Get Maps for User ------
 getUserMaps = function (user, db) {
   return db
     .query(
@@ -74,6 +76,7 @@ getUserMaps = function (user, db) {
     .then((res) => res.rows[0]);
 };
 
+// ------ Get Favorite Maps for User ------
 const getFavs = function (user, db) {
   return db
     .query(

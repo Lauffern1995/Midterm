@@ -6,38 +6,57 @@ const { checkLogin } = require('./helper_functions');
 
 module.exports = (db) => {
 
-
-
   router.get('/', (req, res) => {
-
-    if(req.session.id) {
-      res.redirect('/')
-    }
-
-
     res.render('login')
+  });
 
+
+  router.post('/register', (req, res) => {
+
+    const isEmailInDb = checkLogin(req.body, db);
+    isEmailInDb.then((data) => {
+      if (data) {
+        res
+          .status(400)
+          .send('Email already registered, Please <a href="/login">login!</a>');
+        return;
+      } else {
+
+        let queryString = `
+        INSERT INTO users (name, email, password, date_created)
+        VALUES ($1, $2, $3, now()::date) RETURNING *;
+  `;
+        db.query(queryString, [
+          req.body.name,
+          req.body.email,
+          req.body.password,
+        ]).then((data) => {
+          req.session.id = data.rows[0].id;
+          const templateVars = { user: req.session.id }
+          res.render('index', templateVars);
+          return;
+        });
+      }
+    });
   });
 
 
 
-  router.post('/', (req, res) => {
-    if (req.session.id) {
-      const templateVars = { user: user[req.session.id] }
+  router.post('/login', (req, res) => {
 
-      console.log('Template Vars in ----> login', templateVars)
+      let templateVars = {}
 
       const isEmailInDb = checkLogin(req.body, db);
       isEmailInDb
         .then((data) => {
-          if (req.session.id === data.id) {
-            res.render('/', templateVars);
-          } else {
-            res.status(400).send('Email does not exist');
+          console.log(data.id)
+          req.session.id = data.id
+          console.log(req.session.id)
+          templateVars = { user: req.session.id }
+            res.render('index', templateVars)
             return;
-          }
         })
-        .catch(() => {
+        .catch((err) => {
           res
             .status(400)
             .send(
@@ -45,7 +64,7 @@ module.exports = (db) => {
             );
           return;
         });
-    }
+
   });
   return router;
 };

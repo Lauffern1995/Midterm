@@ -1,10 +1,28 @@
 <nav>
   <div class="nav-logo">MapWiki</div>
   <div class="nav-prompt">
-<% if(!user) { %>
+
+    <% if (user) { %>
+      <form method="POST" action="/logout" class="logout-form">
+        <div class="form-group form-inline">
+          <label>Logged In As: <%= user.id %> </label>
+          <button type="submit" class="" style="margin: 1em">Logout</button>
+        </div>
+      </form>
+    <% } else { %>
+      <div class="">
+        <div>
+          <a href="/login">Login</a>
+          <a href="/register">Register</a>
+        </div>
+      </div>
+
+      <% } %>
+
+<!-- <% if(!user) { %>
     <div class="login"><a href="/login">Login</a></div>
     <div class="register"><a href="/login">Register</a></div>
 <% } %>
     <div class="get-maps"><a href="/maps">Your <strong>MAPS</strong></a></div>
   </div>
-</nav>
+</nav> -->

@@ -17,22 +17,12 @@ module.exports = (db) => {
   });
   router.use((req, res, next) => {
     if (!req.session.user) {
-      
+
     }
   })
 
 
 
-  router.post('/', (req, res) => {
-    const { title, description } = req.body;
-    let queryString = `
-      INSERT INTO maps (title, description, date_created)
-      VALUES ($1, $2, now()::date) RETURNING *;
-    `;
-    db.query(queryString, [title, description]).then((data) =>
-      res.redirect('./')
-    );
-  });
 
   router.get('/', (req, res) => {
 
