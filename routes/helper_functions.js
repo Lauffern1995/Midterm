@@ -63,7 +63,7 @@ const getMapByLike = function (title, db) {
 };
 
 // ------ Get Maps for User ------
-getUserMaps = function (user, db) {
+getUserMaps = function (user_id, db) {
   return db
     .query(
       `
@@ -73,7 +73,7 @@ getUserMaps = function (user, db) {
   `,
       [user_id]
     )
-    .then((res) => res.rows[0]);
+    .then((res) => res.rows);
 };
 
 // ------ Get Favorite Maps for User ------
@@ -164,4 +164,5 @@ module.exports = {
   getCoords,
   pinDropper,
   getAllMaps,
+  getUserMaps,
 };

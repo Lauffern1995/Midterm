@@ -18,12 +18,14 @@ module.exports = (db) => {
   // ------ Get Users Created Maps (List) ------
   router.post('/user_maps', (req, res) => {
     let templateVars = { user: req.session.id };
+    const user_id = req.session.id;
 
-    console.log(templateVars, ' Template Vars from /getusermaps ');
+    console.log(templateVars, ' Template Vars from /user_maps ');
 
-    const mapList = getUserMaps(db);
-    mapList.then((data) => {
-      templateVars = { user: req.session.id, data: data };
+    const mapList = getUserMaps(user_id, db);
+    mapList.then((maps) => {
+      templateVars = { user: req.session.id, maps };
+      console.log(templateVars);
 
       res.render('index', templateVars);
     });
@@ -58,14 +60,33 @@ module.exports = (db) => {
 
   // ------ Create A Map ------
   router.post('/create_map', (req, res) => {
+    const templateVars = { user: req.session.id };
+    const user_id = req.session.id;
     const { title, description } = req.body;
     let queryString = `
-      INSERT INTO maps (title, description, date_created)
-      VALUES ($1, $2, now()::date) RETURNING *;
+      INSERT INTO maps (user_id, title, description, date_created)
+      VALUES ($1, $2, $3, now()::date) RETURNING *;
     `;
-    db.query(queryString, [title, description]).then((data) => {
+    db.query(queryString, [user_id, title, description]).then((data) => {
       res.render('index', templateVars);
     });
+  });
+
+  // ------ Update A Map ------
+  router.post('/update_map', (req, res) => {
+    const templateVars = { user: req.session.id };
+    const user_id = req.session.id;
+    const { title, description, map_id } = req.body;
+    let queryString = `
+      UPDATE maps
+      SET title = $1, description = $2, last_edited_on = now()::date, last_edited_by = $3
+      WHERE id = $4;
+    `;
+    db.query(queryString, [title, description, user_id, map_id]).then(
+      (data) => {
+        res.render('index', templateVars);
+      }
+    );
   });
 
   // ------ Logout Handler ------

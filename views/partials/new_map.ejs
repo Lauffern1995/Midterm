@@ -6,19 +6,25 @@
     <button>Add Map</button>
   </form>
 
+  <div class="new-map-container">
+    <form action="/update_map" method="POST">
+      <input type="text" name="title" placeholder="Update your map!" >
+      <input type="text" name="description" placeholder="Update Desc">
+      <input type="text" name="map_id" placeholder="Which Map">
+      <button>Update Map</button>
+    </form>
 
   <form action="/user_maps" method="POST">
-    <input type="text" name="title" placeholder="Get Your Maps!" required="">
-    <button>User Maps</button>
+    <button>Get Your Maps!</button>
   </form>
 
   <form action="/fav_maps" method="POST">
-    <input type="text" name="title" placeholder="Get Your Fav Maps!" required="">
+    <input type="text" name="title" placeholder="Get Your Fav Maps!">
     <button>Fav Maps</button>
   </form>
 
   <form action="/search_map" method="POST">
-    <input type="text" name="title" placeholder="Search For Map!" required="">
+    <input type="text" name="title" placeholder="Search For Map!">
     <button>Search Maps</button>
   </form>
 
