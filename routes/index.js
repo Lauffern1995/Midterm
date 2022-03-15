@@ -6,14 +6,37 @@ const {
   getUserMaps,
   getMapByLike,
   getFavs,
+  getCoords,
 } = require('./helper_functions');
+const coords = require('./coords');
 
 module.exports = (db) => {
   // ------ Get The Home Page ------
   router.get('/', (req, res) => {
     let templateVars = { user: req.session.id };
+    console.log(templateVars)
     res.render('index', templateVars);
   });
+
+  router.get('/maps', (req, res) => {
+    const search = req.query.search
+    console.log('search var --->', search);
+
+    //call query function from db
+    //match that map to the coords table
+    //push coords to coords array
+
+    getMapByLike(search, db)
+    .then((data) => {
+      console.log('first data ---->', data)
+     return getCoords(data[0].id, db)
+
+    })
+    .then((data) => {
+      console.log('second data ---->', data)
+      res.json({coords: data});
+    })
+  })
 
   // ------ Get Users Created Maps (List) ------
   router.post('/user_maps', (req, res) => {
