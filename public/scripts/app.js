@@ -1,6 +1,6 @@
 // Client facing scripts here\
 
-
+$(document).ready(function () {
 
 //INTIALIZE MAP TO HOMEPAGE//
 let map = null;
@@ -17,10 +17,8 @@ const initMap = function () {
   /////////********LISTENS FOR CLICKS AND PLACE MARKERS********/////////////
   google.maps.event.addListener(map, 'click', function (event) {
     placeMarker(map, event.latLng)
-    ///calling a function to post pin
+
   });
-
-
 
 
   //////////******* USER DROPPED MARKERS ******/////////////
@@ -66,16 +64,18 @@ console.log('results --->', results);
 
 
 const loadMap = function (search) {
-  console.log("SEARCH ===>", search)
+
+
+console.log('LOADMAP==',search);
+
 
   $.ajax({
     method: 'GET',
-    url: `/search=${search}`,
+    url: `/`,
   })
     .then((data) => {
-      console.log('HERE', data)
-    // console.log('this is the data ---->', data)
 
+      customMaps(search)
 
     })
 
@@ -84,29 +84,32 @@ const loadMap = function (search) {
     });
 };
 
-$(document).ready(function () {
+setTimeout(() => {
   initMap()
 
-  $('#map-list-item').click(function (search) {
-    console.log("SEARCH ===>", search)
-
-    $.ajax({
-      method: 'GET',
-      url: `/search=${search}`,
-    })
-      .then((data) => {
-        console.log('HERE', data)
-      // console.log('this is the data ---->', data)
+}, 200);
 
 
+
+$('.map-list-item').click( function(e)  {
+  e.preventDefault()
+  let url = $(this).text()
+
+
+  $.ajax({
+        method: 'GET',
+        url: url,
       })
+        .then((data) => {
 
-      .catch((err) => {
-        console.log('err', err);
-      });
-  });
+          loadMap(data.coords)
 
-  //loadMap()
+        })
+
+        .catch((err) => {
+          console.log('err', err);
+        });
+    });
 
 
 });
