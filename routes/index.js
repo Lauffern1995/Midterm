@@ -21,7 +21,6 @@ module.exports = (db) => {
 
   router.get('/maps', (req, res) => {
     const search = req.query.search
-    console.log('search var --->', search);
 
     //call query function from db
     //match that map to the coords table
@@ -95,15 +94,10 @@ module.exports = (db) => {
     const mapName = req.params
     const coords = getMapCoordsByTitle(mapName, db);
     coords.then(coords => {
-     
-      res.json({coords: coords})
+
+      res.render('maps', {coords: coords})
 
     })
-
-
-
-
-
 
   });
 
