@@ -14,55 +14,50 @@ const coords = require('./coords');
 module.exports = (db) => {
   // ------ Get The Home Page ------
   router.get('/', (req, res) => {
-    let templateVars = { user: req.session.id };
+    let templateVars = { user: req.session.id, map_id: req.session.map_id };
     // console.log(templateVars)
     res.render('index', templateVars);
   });
 
+  // router.get('/maps', (req, res) => {
+  //   const search = req.query.search;
 
+  //   getMapByLike(search, db)
+  //     .then((data) => {
+  //       console.log('first data ---->', data);
+  //       return getCoords(data[0].id, db);
+  //     })
+  //     .then((data) => {
+  //       console.log('second data ---->', data);
+  //       res.json({ coords: data });
+  //     });
+  // });
 
-  router.get('/maps', (req, res) => {
+  // SENDING JSON TO DOM AJAX ///
 
-    const search = req.query.search
+  router.get('/:mapname', (req, res) => {
+    let templateVars = { user: req.session.id, map_id: req.session.map_id };
 
-    getMapByLike(search, db)
-    .then((data) => {
-      console.log('first data ---->', data)
-     return getCoords(data[0].id, db)
+    const mapName = req.params;
 
-    })
-    .then((data) => {
-      console.log('second data ---->', data)
-      res.json({coords: data});
-    })
+    const coords = getMapCoordsByTitle(mapName, db);
 
-  })
+    return coords.then((coords) => {
+      console.log('COORDS ===> ', coords);
+      // console.log('MAP coords===>', coords[0].map_id);
 
-// SENDING JSON TO DOM AJAX ///
+      // req.session.map_id = coords[0].map_id;
 
-    router.get('/:mapname', (req, res) => {
+      console.log('MAP session===>', req.session.map_id);
+      templateVars = {
+        user: req.session.id,
+        coords: coords,
+        map_id: req.session.map_id,
+      };
 
-      let templateVars = { user: req.session.id };
-
-      const mapName = req.params
-      console.log(mapName.search)
-
-
-
-      const coords = getMapCoordsByTitle(mapName, db);
-
-       return coords.then(coords => {
-        //  console.log('COORDS ===> ', coords);
-
-
-        templateVars = {user: req.session.id, coords: coords}
-
-        res.json(templateVars)
-
-      })
-
+      res.json(templateVars);
     });
-
+  });
 
   // ------ Get Users Created Maps (List) ------
   router.post('/user_maps', (req, res) => {
@@ -83,22 +78,20 @@ module.exports = (db) => {
   // ------ Get Users Favorite Maps (List) ------
   router.post('/fav_maps', (req, res) => {
     let templateVars = { user: req.session.id };
-    let user_id = req.session.id
+    let user_id = req.session.id;
     // console.log(templateVars, ' Template Vars from /fav_map ');
 
     const mapList = getFavs(user_id, db);
     mapList.then((maps) => {
-        // console.log()
+      // console.log()
       templateVars = { user: req.session.id, maps: maps };
 
       res.render('index', templateVars);
     });
-
   });
 
   // ------ Get Searched Map (Single) ------
   router.post('/:map', (req, res) => {
-
     let templateVars = { user: req.session.id };
 
     let { title } = req.body;
@@ -110,10 +103,7 @@ module.exports = (db) => {
       templateVars = { user: req.session.id, maps: maps };
       res.render('index', templateVars);
     });
-
   });
-
-
 
   // ------ Create A Map ------
   router.post('/create_map', (req, res) => {
@@ -144,6 +134,15 @@ module.exports = (db) => {
         res.render('index', templateVars);
       }
     );
+  });
+
+  // ------ Add Coords ------
+
+  router.post('/coords_post', (req, res) => {
+    const templateVars = { user: req.session.id };
+    const user_id = req.session.id;
+    const { title, map_id, latitude, longitude } = req.body;
+    postCoordsToDB(title, map_id, user_id, latitude, longitude, db);
   });
 
   // ------ Logout Handler ------

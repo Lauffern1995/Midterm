@@ -117,13 +117,36 @@ const getCoords = function (map, db) {
     .then((res) => res.rows);
 };
 
+const postCoordsToDB  = function (title, map_id, user_id, lat, lng, db) {
+  return db
+    .query(
+      `
+    INSERT INTO coords (title, map_id, user_id, latitude, longitude)
+    VALUES ($1, $2, $3, $4, $5)
+
+  `,
+      [title, map_id, user_id, lat, lng]
+    )
+    .then((res) => res.rows);
+};
+
+// DROP TABLE IF EXISTS coords CASCADE;
+// CREATE TABLE coords (
+//   id SERIAL PRIMARY KEY NOT NULL,
+//   title text,
+//   map_id INTEGER NOT NULL REFERENCES maps(id) ON DELETE CASCADE,
+//   user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+//   longitude DECIMAL NOT NULL,
+//   latitude DECIMAL NOT NULL,
+//   description text
+// );
 
 const getMapCoordsByTitle = function (map, db) {
 
   return db
     .query(
       `
-    SELECT longitude, latitude, map_id, coords.description
+    SELECT longitude, latitude, map_id, coords.title
     FROM coords
     JOIN maps ON maps.id = coords.map_id
     WHERE maps.title = $1;

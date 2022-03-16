@@ -5,7 +5,12 @@ const bodyParser = require('body-parser');
 const { checkLogin } = require('./helper_functions');
 
 module.exports = (db) => {
+
   router.get('/', (req, res) => {
+    res.render('login');
+  });
+
+  router.get('/register', (req, res) => {
     res.render('login');
   });
 
@@ -55,8 +60,10 @@ module.exports = (db) => {
           .send('Email not registered, Please <a href="/login">register!</a>');
         return;
       });
+
   });
+
   return router;
 };
 
-const test = 4;
+

@@ -4,7 +4,6 @@ CREATE TABLE coords (
   title text,
   map_id INTEGER NOT NULL REFERENCES maps(id) ON DELETE CASCADE,
   user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
-  longitude DECIMAL NOT NULL,
   latitude DECIMAL NOT NULL,
-  description text
+  longitude DECIMAL NOT NULL
 );

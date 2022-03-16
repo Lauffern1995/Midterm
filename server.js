@@ -60,7 +60,6 @@ const mapWithCoords = require('./routes/coords');
 
 // ------- Routes Mounted -------
 
-app.use('/', indexRoute(db));
 app.use('/login', loginRoute(db));
 app.use('/register', registerRoute(db));
 app.use('/maps', mapsRoute(db));
@@ -69,6 +68,7 @@ app.use('/api/users', usersRoute(db));
 app.use('/map_list', map_listRoute(db));
 app.use('/maps/maps_search', mapsSearchRoute(db));
 app.use('/coords', mapWithCoords(db));
+app.use('/', indexRoute(db));
 
 // ------- Server Mounted -------
 
