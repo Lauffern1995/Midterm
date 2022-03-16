@@ -15,16 +15,15 @@ module.exports = (db) => {
   // ------ Get The Home Page ------
   router.get('/', (req, res) => {
     let templateVars = { user: req.session.id };
-    console.log(templateVars)
+    // console.log(templateVars)
     res.render('index', templateVars);
   });
 
-  router.get('/maps', (req, res) => {
-    const search = req.query.search
 
-    //call query function from db
-    //match that map to the coords table
-    //push coords to coords array
+
+  router.get('/maps', (req, res) => {
+
+    const search = req.query.search
 
     getMapByLike(search, db)
     .then((data) => {
@@ -36,19 +35,46 @@ module.exports = (db) => {
       console.log('second data ---->', data)
       res.json({coords: data});
     })
+
   })
+
+// SENDING JSON TO DOM AJAX ///
+
+    router.get('/:mapname', (req, res) => {
+
+      let templateVars = { user: req.session.id };
+
+      const mapName = req.params
+      console.log(mapName.search)
+
+
+
+      const coords = getMapCoordsByTitle(mapName, db);
+
+       return coords.then(coords => {
+        //  console.log('COORDS ===> ', coords);
+
+
+        templateVars = {user: req.session.id, coords: coords}
+
+        res.json(templateVars)
+
+      })
+
+    });
+
 
   // ------ Get Users Created Maps (List) ------
   router.post('/user_maps', (req, res) => {
     let templateVars = { user: req.session.id };
     const user_id = req.session.id;
 
-    console.log(templateVars, ' Template Vars from /user_maps ');
+    // console.log(templateVars, ' Template Vars from /user_maps ');
 
     const mapList = getUserMaps(user_id, db);
     mapList.then((maps) => {
       templateVars = { user: req.session.id, maps };
-      console.log(templateVars);
+      // console.log(templateVars);
 
       res.render('index', templateVars);
     });
@@ -58,11 +84,11 @@ module.exports = (db) => {
   router.post('/fav_maps', (req, res) => {
     let templateVars = { user: req.session.id };
     let user_id = req.session.id
-    console.log(templateVars, ' Template Vars from /fav_map ');
+    // console.log(templateVars, ' Template Vars from /fav_map ');
 
     const mapList = getFavs(user_id, db);
     mapList.then((maps) => {
-        console.log()
+        // console.log()
       templateVars = { user: req.session.id, maps: maps };
 
       res.render('index', templateVars);
@@ -88,18 +114,6 @@ module.exports = (db) => {
   });
 
 
-
-  router.get('/:mapname', (req, res) => {
-
-    const mapName = req.params
-    const coords = getMapCoordsByTitle(mapName, db);
-    coords.then(coords => {
-
-      res.render('maps', {coords: coords})
-
-    })
-
-  });
 
   // ------ Create A Map ------
   router.post('/create_map', (req, res) => {
@@ -135,12 +149,12 @@ module.exports = (db) => {
   // ------ Logout Handler ------
   router.post('/logout', (req, res) => {
     req.session = null;
-    res.render('login');
+    res.redirect('login');
   });
 
   // ------ Get Highest Rated Maps (STRETCH) ------
   router.post('/pop_map', (req, res) => {
-    console.log('maps search');
+    // console.log('maps search');
   });
 
   return router;

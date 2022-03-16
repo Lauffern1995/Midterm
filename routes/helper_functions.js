@@ -123,7 +123,7 @@ const getMapCoordsByTitle = function (map, db) {
   return db
     .query(
       `
-    SELECT longitude, latitude
+    SELECT longitude, latitude, map_id, coords.description
     FROM coords
     JOIN maps ON maps.id = coords.map_id
     WHERE maps.title = $1;
