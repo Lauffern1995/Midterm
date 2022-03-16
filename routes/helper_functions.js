@@ -117,7 +117,7 @@ const getCoords = function (map, db) {
     .then((res) => res.rows);
 };
 
-const postCoordsToDB  = function (title, map_id, user_id, lat, lng, db) {
+const postCoordsToDB = function (title, map_id, user_id, lat, lng, db) {
   return db
     .query(
       `
@@ -142,7 +142,6 @@ const postCoordsToDB  = function (title, map_id, user_id, lat, lng, db) {
 // );
 
 const getMapCoordsByTitle = function (map, db) {
-
   return db
     .query(
       `
@@ -157,8 +156,6 @@ const getMapCoordsByTitle = function (map, db) {
 };
 
 //********************** LATLNG L00P**********************/
-
-
 
 const pinDropper = function (results) {
   return results.map((pin) => {
@@ -201,4 +198,5 @@ module.exports = {
   getAllMaps,
   getUserMaps,
   getMapCoordsByTitle,
+  postCoordsToDB,
 };

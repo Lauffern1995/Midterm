@@ -4,6 +4,7 @@
 
 $(document).ready(function () {
   let map = null;
+  let currentMap = null;
 
   const initMap = function () {
     map = new google.maps.Map(document.getElementById('map'), {
@@ -12,17 +13,15 @@ $(document).ready(function () {
     });
 
     /////////********LISTENS FOR CLICKS AND PLACE MARKERS********/////////////
-    const addMarkerToDb = (coordTitle, map, location) => {
-      console.log('map_id', `<%= map_id %>`);
-
+    const addMarkerToDb = (coordTitle, location) => {
       $.ajax({
         method: 'POST',
         url: '/coords_post',
         data: {
-          coordTitle: coordTitle,
-          map: `<%= map_id %>`,
-          latitude: location.lat,
-          longitude: location.lng,
+          title: coordTitle,
+          map_id: currentMap,
+          latitude: location.lat(),
+          longitude: location.lng(),
         },
       }).catch((err) => {
         console.log('err', err);
@@ -31,12 +30,10 @@ $(document).ready(function () {
 
     google.maps.event.addListener(map, 'click', function (event) {
       const coordTitle = $('.coord-title-input').val();
-      // console.log(session.map_id);
 
       if (coordTitle.length) {
-        console.log('map_id', `<%= map_id %>`);
         placeMarker(map, event.latLng, coordTitle);
-        addMarkerToDb(coordTitle, map, location);
+        addMarkerToDb(coordTitle, event.latLng);
       } else {
         $('.coord-title-heading')
           .text('Please enter A title for your point!')
@@ -70,7 +67,6 @@ $(document).ready(function () {
 
   const customMaps = function (results) {
     console.log('results --->', results);
-
     // var latLng = marker.getPosition(); // returns LatLng object
     // map.setCenter(latLng)
 
@@ -122,13 +118,13 @@ $(document).ready(function () {
   $('.map-list-item').click(function (e) {
     e.preventDefault();
     let url = $(this).text();
-    console.log('URL -->', url);
 
     $.ajax({
       method: 'GET',
       url: url,
     })
       .then((data) => {
+        currentMap = data.coords[0].map_id;
         initMap();
         loadMap(data.coords);
       })

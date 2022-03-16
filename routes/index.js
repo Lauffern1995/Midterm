@@ -139,8 +139,12 @@ module.exports = (db) => {
   // ------ Add Coords ------
 
   router.post('/coords_post', (req, res) => {
+    console.log('req', req);
     const templateVars = { user: req.session.id };
+    console.log('coords_post');
     const user_id = req.session.id;
+    console.log('BODY', req.body);
+    console.log('DATA', req.data);
     const { title, map_id, latitude, longitude } = req.body;
     postCoordsToDB(title, map_id, user_id, latitude, longitude, db);
   });

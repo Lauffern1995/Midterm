@@ -44,8 +44,6 @@ app.use(
   })
 );
 
-
-
 // ------- Routes required -------
 
 const indexRoute = require('./routes/index');
@@ -67,7 +65,7 @@ app.use('/api/users', usersRoute(db));
 // app.use("/map_create", map_createRoute(db));
 app.use('/map_list', map_listRoute(db));
 app.use('/maps/maps_search', mapsSearchRoute(db));
-app.use('/coords', mapWithCoords(db));
+app.use('/coords_post', mapWithCoords(db));
 app.use('/', indexRoute(db));
 
 // ------- Server Mounted -------
