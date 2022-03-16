@@ -92,6 +92,20 @@ const getFavs = function (user_id, db) {
     .then((res) => res.rows);
 };
 
+
+// -------- Insert Favourite Map for User ------ //
+
+const addFav = function (user_id, db) {
+  return db
+    .query(
+      `
+      INSERT INTO favourite_maps (user_id, map_id)
+      VALUES ($1, $2) RETURNING *;
+      `, [user_id, map_id]
+    )
+    .then((res) => res.rows)
+};
+
 // const insertCoords = function (placeholder, db) {
 //   let queryString = (`
 //   INSERT INTO coords (title, map_id, user_id, longitude, latitude, description)
@@ -189,6 +203,7 @@ const pinDropper = function (results) {
 // );
 
 module.exports = {
+  addFav,
   checkLogin,
   getMap,
   getFavs,

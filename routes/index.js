@@ -8,6 +8,7 @@ const {
   getFavs,
   getCoords,
   getMapCoordsByTitle,
+  addFav,
 } = require('./helper_functions');
 const coords = require('./coords');
 
@@ -87,6 +88,25 @@ module.exports = (db) => {
       res.render('index', templateVars);
     });
   });
+
+
+  // -------- Make This Map One of Your Favs! ------- ///
+
+  router.post('/add_fav', (req, res) => {
+    const templateVars = { user: req.session.id, map_id: req.session.map_id };
+    const user_id = req.session.id;
+    const map_id = req.session.map_id;
+    console.log(user_id);
+
+    let queryString = `
+    INSERT INTO favourite_maps (user_id, map_id)
+    VALUES ($1, $2) RETURNING *;
+    `;
+    db.query(queryString, [user_id, map_id]).then((data) => {
+      res.render('index', templateVars);
+    });
+  });
+
 
   // ------ Create A Map ------
   router.post('/create_map', (req, res) => {
