@@ -145,7 +145,7 @@ const getMapCoordsByTitle = function (map, db) {
   return db
     .query(
       `
-    SELECT longitude, latitude, map_id, coords.title
+    SELECT coords.*
     FROM coords
     JOIN maps ON maps.id = coords.map_id
     WHERE maps.title = $1;

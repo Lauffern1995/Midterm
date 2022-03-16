@@ -14,7 +14,7 @@ const coords = require('./coords');
 module.exports = (db) => {
   // ------ Get The Home Page ------
   router.get('/', (req, res) => {
-    let templateVars = { user: req.session.id, map_id: req.session.map_id };
+    let templateVars = { user: req.session.id };
     // console.log(templateVars)
     res.render('index', templateVars);
   });
@@ -43,12 +43,10 @@ module.exports = (db) => {
     const coords = getMapCoordsByTitle(mapName, db);
 
     return coords.then((coords) => {
-      console.log('COORDS ===> ', coords);
+      // console.log('COORDS ===> ', coords);
       // console.log('MAP coords===>', coords[0].map_id);
 
-      // req.session.map_id = coords[0].map_id;
-
-      console.log('MAP session===>', req.session.map_id);
+      // req.session.map_id = coords[0].map_id;;
       templateVars = {
         user: req.session.id,
         coords: coords,
@@ -90,21 +88,6 @@ module.exports = (db) => {
     });
   });
 
-  // ------ Get Searched Map (Single) ------
-  router.post('/:map', (req, res) => {
-    let templateVars = { user: req.session.id };
-
-    let { title } = req.body;
-
-    // console.log(templateVars, ' Template Vars from /search_map ');
-
-    const search = getMapByLike(title, db);
-    search.then((maps) => {
-      templateVars = { user: req.session.id, maps: maps };
-      res.render('index', templateVars);
-    });
-  });
-
   // ------ Create A Map ------
   router.post('/create_map', (req, res) => {
     const templateVars = { user: req.session.id };
@@ -125,9 +108,9 @@ module.exports = (db) => {
     const user_id = req.session.id;
     const { title, description, map_id } = req.body;
     let queryString = `
-      UPDATE maps
-      SET title = $1, description = $2, last_edited_on = now()::date, last_edited_by = $3
-      WHERE id = $4;
+    UPDATE maps
+    SET title = $1, description = $2, last_edited_on = now()::date, last_edited_by = $3
+    WHERE id = $4;
     `;
     db.query(queryString, [title, description, user_id, map_id]).then(
       (data) => {
@@ -139,9 +122,7 @@ module.exports = (db) => {
   // ------ Add Coords ------
 
   router.post('/coords_post', (req, res) => {
-    console.log('req', req);
     const templateVars = { user: req.session.id };
-    console.log('coords_post');
     const user_id = req.session.id;
     console.log('BODY', req.body);
     console.log('DATA', req.data);
@@ -153,6 +134,21 @@ module.exports = (db) => {
   router.post('/logout', (req, res) => {
     req.session = null;
     res.redirect('login');
+  });
+
+  // ------ Get Searched Map (Single) ------
+  router.post('/:map', (req, res) => {
+    let templateVars = { user: req.session.id };
+
+    let { title } = req.body;
+
+    // console.log(templateVars, ' Template Vars from /search_map ');
+
+    const search = getMapByLike(title, db);
+    search.then((maps) => {
+      templateVars = { user: req.session.id, maps: maps };
+      res.render('index', templateVars);
+    });
   });
 
   // ------ Get Highest Rated Maps (STRETCH) ------
