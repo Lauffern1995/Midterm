@@ -34,7 +34,8 @@ module.exports = (db) => {
         user: req.session.id,
         map_id: req.session.map_id,
         user_maps: req.session.map,
-        fav_maps: req.session.favs
+        fav_maps: req.session.favs,
+        name: req.session.name
         };
 
     const mapName = req.params;
@@ -133,7 +134,8 @@ module.exports = (db) => {
     const templateVars = {
       user: req.session.id,
       user_maps: req.session.map,
-      fav_maps: req.session.favs
+      fav_maps: req.session.favs,
+      name: req.session.name
      };
     const user_id = req.session.id;
     const { title, description } = req.body;
@@ -194,7 +196,7 @@ module.exports = (db) => {
 
     const search = getMapByLike(title, db);
     search.then((maps) => {
-      templateVars = { user: req.session.id, maps: maps };
+      templateVars = { user: req.session.id, maps: maps, name: req.session.name, fav_maps: req.session.favs, user_maps: req.session.map };
       res.render('index', templateVars);
     });
   });

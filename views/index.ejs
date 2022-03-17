@@ -16,7 +16,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Concert+One&display=swap" rel="stylesheet">
+
 
   <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
   <script type="text/javascript" src="/scripts/temp_app.js"></script>
@@ -36,23 +37,32 @@
   <div class="map-container">
     <% if (user) { %>
     <div class="profile-card">
-      <div class="title"><%= name.name %></div>
-      <p class="sub-title"><%= name.name %>'s Maps</p>
-      <ul id="users-list">
+      <div class="group-icon-title">
+      <i class="fa-solid fa-user animate-charcter"></i>
+      <div class="animate-charcter">
+        <%= name.name %>
+      </div>
+      </div>
+      <div class="user-map-container">
+      <p class="sub-title">You Have <%= user_maps.length %> <% if (user_maps.length >= 2) { %> Maps <% } else { %> Map <% } %></p>
+      <ul class="no-bullet-list">
         <% user_maps.map(function(maps, i){ %>
         <li>
              <%- `<a href=''>${user_maps[i].title}</a>` %>
         </li>
             <% }); %>
       </ul>
-      <p class="sub-title"><%= name.name %>'s Favourite Maps</p>
-      <ul id="favs-list">
+    </div>
+    <div class="fav-map-container">
+      <p class="sub-title">You Have <%= fav_maps.length %> <% if (fav_maps.length >= 2) { %> Fav Maps <% } else { %> Fav Map <% } %></p></p>
+      <ul class="no-bullet-list">
         <% fav_maps.map(function(maps, i){ %>
         <li>
              <%- `<a href=''>${fav_maps[i].title}</a>` %>
         </li>
             <% }); %>
       </ul>
+    </div>
     </div>
     <% } %>
     <div class="map-options-container">
