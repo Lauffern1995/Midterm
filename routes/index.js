@@ -21,7 +21,7 @@ module.exports = (db) => {
     if (!req.session) {
       res.render('login');
     }
-    const templateVars = { user: req.session.id, user_maps: req.session.map, fav_maps: req.session.favs, name: req.session.name }
+    const templateVars = { user: req.session.id, user_maps: req.session.map, fav_maps: req.session.favs, name: req.session.name, map_id: req.session.map_id }
     res.render('index', templateVars);
     // })
 
@@ -115,6 +115,7 @@ module.exports = (db) => {
      };
     const user_id = req.session.id;
     const map_id = req.session.map_id;
+    console.log('HERE===>', req.session.map_id);
 
 
     let queryString = `
@@ -154,14 +155,18 @@ module.exports = (db) => {
 
   // ------ Update A Map ------
   router.post('/update_map', (req, res) => {
-    console.log('HERE_____---___----', req.body)
     const templateVars = {
       user: req.session.id,
       user_maps: req.session.map,
-      fav_maps: req.session.favs
+      fav_maps: req.session.favs,
+      name: req.session.name,
+      map_id: req.session.map_id
      };
+     console.log('TEMPVAR->', templateVars)
+     console.log('MAP_ID->', req.session.map_id)
     const user_id = req.session.id;
-    const { title, description, map_id } = req.body;
+    console.log('MAPID--->', map_id)
+    const { title, description } = req.body;
     let queryString = `
     UPDATE maps
     SET title = $1, description = $2, last_edited_on = now()::date, last_edited_by = $3
@@ -181,7 +186,6 @@ module.exports = (db) => {
       user: req.session.id,
      };
     const user_id = req.session.id;
-    console.log('HERE', user_id);
     const { title, map_id, latitude, longitude } = req.body;
     postCoordsToDB(title, map_id, user_id, latitude, longitude, db);
   });
