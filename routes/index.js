@@ -16,18 +16,12 @@ const coords = require('./coords');
 module.exports = (db) => {
   // ------ Get The Home Page ------
   router.get('/', (req, res) => {
-    let templateVars = { user: req.session.id }
-    const user_id = req.session.id
-
-    getUserMaps(user_id, db).then((maps) => {
-      user_maps = req.session.maps
-    })
-    getFavs(user_id, db).then((favs) => {
-      fav_maps = req.session.favs
-      const templateVars = { user: req.session.id, user_maps: req.session.map, fav_maps: req.session.favs }
-      console.log('INDEX=====>', templateVars)
+    if (!req.session) {
+      res.render('login');
+    }
+    const templateVars = { user: req.session.id, user_maps: req.session.map, fav_maps: req.session.favs, name: req.session.name }
     res.render('index', templateVars);
-    })
+    // })
 
 
 
