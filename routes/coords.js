@@ -19,7 +19,25 @@ module.exports = (db) => {
     console.log(req.body);
     const user_id = req.session.id;
     const { title, map_id, latitude, longitude } = req.body;
-    postCoordsToDB(title, map_id, 1, latitude, longitude, db);
+    postCoordsToDB(title, map_id, user_id, latitude, longitude, db);
+  });
+
+  router.delete('/', (req, res) => {
+    console.log('body', req.body.coordId);
+    const id = req.body.coordId;
+    return db
+      .query(
+        `
+  DELETE FROM coords WHERE title = $1
+  `,
+        [id]
+      )
+      .then(() => {
+        console.log('success');
+      })
+      .catch((err) => {
+        console.log('err', err);
+      });
   });
   return router;
 };

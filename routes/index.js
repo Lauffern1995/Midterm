@@ -9,6 +9,8 @@ const {
   getCoords,
   getMapCoordsByTitle,
   addFav,
+  getMapByTitle,
+  addCoordsByMapId,
 } = require('./helper_functions');
 const coords = require('./coords');
 
@@ -43,19 +45,20 @@ module.exports = (db) => {
 
     const coords = getMapCoordsByTitle(mapName, db);
 
-    return coords.then((coords) => {
-      // console.log('COORDS ===> ', coords);
-      // console.log('MAP coords===>', coords[0].map_id);
+    return coords
+      .then((coords) => {
+        console.log('GET COORDS TITLE', coords);
 
-      // req.session.map_id = coords[0].map_id;;
-      templateVars = {
-        user: req.session.id,
-        coords: coords,
-        map_id: req.session.map_id,
-      };
-
-      res.json(templateVars);
-    });
+        templateVars = {
+          user: req.session.id,
+          coords: coords,
+          map_id: req.session.map_id,
+        };
+        res.json(templateVars);
+      })
+      .catch((err) => {
+        console.log('err in map name route', err);
+      });
   });
 
   // ------ Get Users Created Maps (List) ------
@@ -89,7 +92,6 @@ module.exports = (db) => {
     });
   });
 
-
   // -------- Make This Map One of Your Favs! ------- ///
 
   router.post('/add_fav', (req, res) => {
@@ -107,7 +109,6 @@ module.exports = (db) => {
     });
   });
 
-
   // ------ Create A Map ------
   router.post('/create_map', (req, res) => {
     const templateVars = { user: req.session.id };
@@ -118,8 +119,22 @@ module.exports = (db) => {
       VALUES ($1, $2, $3, now()::date) RETURNING *;
     `;
     db.query(queryString, [user_id, title, description]).then((data) => {
-      res.render('index', templateVars);
+      mapTitle = data.rows[0].title;
+      getMapByTitle(mapTitle, db).then((data) => {
+        coord_id = data[0].id;
+        addCoordsByMapId(coord_id, user_id, db).then((data) => {
+          console.log('COORDS--->', data);
+          res.render('index', templateVars);
+        });
+      });
     });
+    // let queryString = `
+    //   INSERT INTO coords (user_id, title, description)
+    //   VALUES ($1, $2, $3, now()::date) RETURNING *;
+    // `;
+    // db.query(queryString, [user_id, 'test', map_id, 0, 0]).then((data) => {
+    //   res.render('index', templateVars);
+    // });
   });
 
   // ------ Update A Map ------
@@ -144,8 +159,7 @@ module.exports = (db) => {
   router.post('/coords_post', (req, res) => {
     const templateVars = { user: req.session.id };
     const user_id = req.session.id;
-    console.log('BODY', req.body);
-    console.log('DATA', req.data);
+    console.log('HERE', user_id);
     const { title, map_id, latitude, longitude } = req.body;
     postCoordsToDB(title, map_id, user_id, latitude, longitude, db);
   });

@@ -2,6 +2,7 @@ $(document).ready(function () {
   let map = null;
   let markers = {};
   let currentMap = null;
+  let currentMapName = null;
 
   map = new google.maps.Map(document.getElementById('map'), {
     center: { lat: 45.95634662125372, lng: -66.63999655179681 },
@@ -10,29 +11,34 @@ $(document).ready(function () {
 
   // converts to google lat/lang
   const getLatLng = function (lat, lng) {
-    return new google.maps.LatLng(lat, lng);
+    const newMap = new google.maps.LatLng(lat, lng);
+    return newMap;
   };
 
   const initMap = () => {
     map.addListener('click', (event) => {
-      console.log('test');
       createNewMarker(event.latLng);
       renderMarkers(markers);
     });
   };
-  initMap();
+
+  setTimeout(() => {
+    initMap();
+  }, 200);
 
   // Listens for map & Loads Map clicked on in the list
   $('.map-list-item').click(function (e) {
     e.preventDefault();
+    console.log('HERE');
     let url = $(this).text();
+    currentMapName = url;
     map = new google.maps.Map(document.getElementById('map'), {
       center: { lat: 45.95634662125372, lng: -66.63999655179681 },
       zoom: 1,
     });
-    initMap();
+
     getMarkersFromDb(url);
-    renderMarkers();
+    // renderMarkers();
   });
 
   // ~~~~~~~~~~~~~~ Creates NEW marker ~~~~~~~~~~~~~~~~~~
@@ -46,7 +52,7 @@ $(document).ready(function () {
     //Attaches delete listener (MUST STAY HERE)
     marker.addListener('dblclick', function () {
       markers[title].setMap(null);
-      deleteMarkerFromDb();
+      deleteMarkerFromDb(markers[title].title);
     });
     markers[title] = marker;
   }
@@ -87,14 +93,14 @@ $(document).ready(function () {
 
   // DELETE Marker from database
 
-  const deleteMarkerFromDb = function () {
-    // $.ajax({
-    //   method: 'DELETE',
-    //   // ##*@!*(&#@!(^#@!)#@)(*!#&^)(!@(@*!&#_))
-    //   url: '/coords_delete',
-    //   //****^^^^^^^^^ */ NEEDS ENDPOINT ^^^^^^^^
-    // });
-    console.log('NEEDS DB DELETE END POINT');
+  const deleteMarkerFromDb = function (coordId) {
+    $.ajax({
+      data: { coordId },
+      method: 'DELETE',
+      url: '/coords_post',
+    }).then(() => {
+      getMarkersFromDb(currentMapName);
+    });
   };
 
   // GET Markers from database and render to map
@@ -102,15 +108,28 @@ $(document).ready(function () {
     $.ajax({
       method: 'GET',
       url: url,
-    }).then((data) => {
-      markers = {};
-      currentMap = data.coords[0].map_id;
-      data.coords.forEach((coord) => {
-        const markerLatLng = getLatLng(coord.latitude, coord.longitude);
-        createMarker(coord.title, markerLatLng);
+    })
+      .then((data) => {
+        markers = {};
+        console.log(data);
+        if (data.coords.length) {
+          currentMap = data.coords[0].map_id;
+          console.log(currentMap);
+          data.coords.forEach((coord) => {
+            const markerLatLng = getLatLng(coord.latitude, coord.longitude);
+            createMarker(coord.title, markerLatLng);
+          });
+        } else {
+          console.log(data);
+          currentMap = data.map_id;
+          console.log('FAKE');
+        }
+      })
+      .then(() => {
+        console.log(markers);
+        initMap();
+        renderMarkers();
       });
-      renderMarkers();
-    });
   };
 
   //Renders all markers in markers object

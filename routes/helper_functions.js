@@ -92,7 +92,6 @@ const getFavs = function (user_id, db) {
     .then((res) => res.rows);
 };
 
-
 // -------- Insert Favourite Map for User ------ //
 
 const addFav = function (user_id, db) {
@@ -101,9 +100,10 @@ const addFav = function (user_id, db) {
       `
       INSERT INTO favourite_maps (user_id, map_id)
       VALUES ($1, $2) RETURNING *;
-      `, [user_id, map_id]
+      `,
+      [user_id, map_id]
     )
-    .then((res) => res.rows)
+    .then((res) => res.rows);
 };
 
 // const insertCoords = function (placeholder, db) {
@@ -169,6 +169,44 @@ const getMapCoordsByTitle = function (map, db) {
     .then((res) => res.rows);
 };
 
+const getMapByTitle = function (map_title, db) {
+  return db
+    .query(
+      `
+    SELECT id
+    FROM maps
+    WHERE maps.title = $1;
+  `,
+      [map_title]
+    )
+    .then((res) => res.rows);
+};
+
+const addCoordsByMapId = function (map_id, user_id, db) {
+  return db
+    .query(
+      `
+    INSERT INTO coords (title, map_id, user_id, latitude, longitude)
+    VALUES ($1, $2, $3, $4, $5) RETURNING *;
+  `,
+      ['TEST', map_id, user_id, 40.783456, -12.34354]
+    )
+    .then((res) => {
+      console.log('inside addCoordsByMapId');
+      res.rows;
+    });
+};
+
+// DROP TABLE IF EXISTS coords CASCADE;
+// CREATE TABLE coords (
+//   id SERIAL PRIMARY KEY NOT NULL,
+//   title text,
+//   map_id INTEGER REFERENCES maps(id) ON DELETE CASCADE,
+//   user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+//   latitude DECIMAL NOT NULL,
+//   longitude DECIMAL NOT NULL
+// );
+
 //********************** LATLNG L00P**********************/
 
 const pinDropper = function (results) {
@@ -214,4 +252,6 @@ module.exports = {
   getUserMaps,
   getMapCoordsByTitle,
   postCoordsToDB,
+  getMapByTitle,
+  addCoordsByMapId,
 };
