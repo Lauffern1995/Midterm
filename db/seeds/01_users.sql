@@ -1,9 +1,13 @@
 -- Users table seeds here (Example)
 
 INSERT INTO users (name, email, password, date_created)
-VALUES ('Noah', 'noah@noah.com', 'password', '12/03/2022'),
-('Guy', 'guydilena@gmail.com', 'password', '12/03/2022' ),
-('Alex', 'alex.gillespie@live.com', 'password', '12/03/2022');
+VALUES ('Noah Lauffer', 'noah@noah.com', 'password', '12/03/2022'),
+('Guy Dilena', 'guydilena@gmail.com', 'password', '12/03/2022' ),
+('Alex Gillespie', 'alex.gillespie@live.com', 'password', '12/03/2022'),
+('Beatrix', 'beatrix@gmail.com', 'password', '12/03/2022'),
+('Winnie', 'Winnie@gmail.com', 'password', '12/03/2022'),
+('Steve', 'Winnie@gmail.com', 'password', '12/03/2022'),
+('Luna', 'Winnie@gmail.com', 'password', '12/03/2022');
 
 
 -- INSERT INTO users (name, email, password, country, province, city, street, postal_code, date_created)

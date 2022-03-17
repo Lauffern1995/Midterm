@@ -1,9 +1,9 @@
-
 $(document).ready(function () {
   let map = null;
   let markers = {};
-  let currentMap = null;
+  let currentMapId = null;
   let currentMapName = null;
+  let deletedCoord = [];
 
   map = new google.maps.Map(document.getElementById('map'), {
     center: { lat: 45.95634662125372, lng: -66.63999655179681 },
@@ -32,6 +32,7 @@ $(document).ready(function () {
     e.preventDefault();
     console.log('HERE');
     let url = $(this).text();
+    $('#current-map').text(url)
     currentMapName = url;
     map = new google.maps.Map(document.getElementById('map'), {
       center: { lat: 45.95634662125372, lng: -66.63999655179681 },
@@ -40,6 +41,19 @@ $(document).ready(function () {
 
     getMarkersFromDb(url);
     // renderMarkers();
+  });
+
+
+
+  $('#update-map').click(function (e) {
+    e.preventDefault();
+    $.ajax({
+      method: 'POST',
+      url: '/map_update',
+      data: { currentMapId }
+    }).catch((err) => {
+      console.log('err', err);
+    });
   });
 
   // ~~~~~~~~~~~~~~ Creates NEW marker ~~~~~~~~~~~~~~~~~~
@@ -83,7 +97,7 @@ $(document).ready(function () {
       url: '/coords_post',
       data: {
         title: coordTitle,
-        map_id: currentMap,
+        map_id: currentMapId,
         latitude: location.lat(),
         longitude: location.lng(),
       },
@@ -100,6 +114,8 @@ $(document).ready(function () {
       method: 'DELETE',
       url: '/coords_post',
     }).then(() => {
+      console.log('WHAT IS THIS COORD NAME',coordId);
+      deletedCoord.push(coordId);
       getMarkersFromDb(currentMapName);
     });
   };
@@ -114,15 +130,15 @@ $(document).ready(function () {
         markers = {};
         console.log(data);
         if (data.coords.length) {
-          currentMap = data.coords[0].map_id;
-          console.log(currentMap);
+          currentMapId = data.coords[0].map_id;
+          console.log(currentMapId);
           data.coords.forEach((coord) => {
             const markerLatLng = getLatLng(coord.latitude, coord.longitude);
             createMarker(coord.title, markerLatLng);
           });
         } else {
           console.log(data);
-          currentMap = data.map_id;
+          currentMapId = data.map_id;
           console.log('FAKE');
         }
       })
@@ -136,7 +152,10 @@ $(document).ready(function () {
   //Renders all markers in markers object
   const renderMarkers = function () {
     for (const marker in markers) {
-      markers[marker].setMap(map);
+      if (!deletedCoord.includes(markers[marker].title)) {
+        console.log('Inside Rendered Markers', deletedCoord)
+        markers[marker].setMap(map);
+      }
     }
   };
 });

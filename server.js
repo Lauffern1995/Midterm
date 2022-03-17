@@ -55,6 +55,7 @@ const mapsRoute = require('./routes/maps');
 const map_listRoute = require('./routes/map_list');
 const mapsSearchRoute = require('./routes/maps_search');
 const mapWithCoords = require('./routes/coords');
+const updateMap = require('./routes/map_update');
 
 // ------- Routes Mounted -------
 
@@ -66,6 +67,7 @@ app.use('/api/users', usersRoute(db));
 app.use('/map_list', map_listRoute(db));
 app.use('/maps/maps_search', mapsSearchRoute(db));
 app.use('/coords_post', mapWithCoords(db));
+app.use('/update_map', updateMap(db));
 app.use('/', indexRoute(db));
 
 // ------- Server Mounted -------

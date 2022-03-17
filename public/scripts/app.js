@@ -2,9 +2,13 @@
 
 // //////////********  Initializes the Map **********//////////////
 
+
+
+
+
 $(document).ready(function () {
   let map = null;
-  let currentMap = null;
+  let currentMapId = null;
   let currentCoords = null;
   let markers = [];
 
@@ -15,7 +19,7 @@ $(document).ready(function () {
       url: '/coords_post',
       data: {
         title: coordTitle,
-        map_id: currentMap,
+        map_id: currentMapId,
         latitude: location.lat(),
         longitude: location.lng(),
       },
@@ -59,6 +63,7 @@ $(document).ready(function () {
     $.ajax({
       method: 'GET',
       url: `/`,
+      data: { currentMapId }
     })
       .then(() => {
         customMaps(currentCoords);

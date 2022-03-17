@@ -18,12 +18,21 @@ const coords = require('./coords');
 module.exports = (db) => {
   // ------ Get The Home Page ------
   router.get('/', (req, res) => {
+
     if (!req.session) {
       res.render('login');
     }
-    const templateVars = { user: req.session.id, user_maps: req.session.map, fav_maps: req.session.favs, name: req.session.name, map_id: req.session.map_id }
+
+    console.log('BODY-->', req.body)
+    const templateVars = {
+      user: req.session.id,
+      user_maps: req.session.map,
+      fav_maps: req.session.favs,
+      name: req.session.name,
+      map_id: req.session.map_id
+    }
+
     res.render('index', templateVars);
-    // })
 
 
 
@@ -32,6 +41,7 @@ module.exports = (db) => {
   // SENDING JSON TO DOM AJAX ///
 
   router.get('/:mapname', (req, res) => {
+    const mapName = req.params;
     let templateVars = {
         user: req.session.id,
         map_id: req.session.map_id,
@@ -40,11 +50,9 @@ module.exports = (db) => {
         name: req.session.name
         };
 
-    const mapName = req.params;
     const coords = getMapCoordsByTitle(mapName, db);
     return coords
       .then((coords) => {
-        console.log('GET COORDS TITLE', coords);
 
         templateVars = {
           user: req.session.id,
@@ -115,8 +123,6 @@ module.exports = (db) => {
      };
     const user_id = req.session.id;
     const map_id = req.session.map_id;
-    console.log('HERE===>', req.session.map_id);
-
 
     let queryString = `
     INSERT INTO favourite_maps (user_id, map_id)
@@ -146,38 +152,14 @@ module.exports = (db) => {
       getMapByTitle(mapTitle, db).then((data) => {
         coord_id = data[0].id;
         addCoordsByMapId(coord_id, user_id, db).then((data) => {
-          console.log('COORDS--->', data);
+
           res.render('index', templateVars);
         });
       });
     });
   });
 
-  // ------ Update A Map ------
-  router.post('/update_map', (req, res) => {
-    const templateVars = {
-      user: req.session.id,
-      user_maps: req.session.map,
-      fav_maps: req.session.favs,
-      name: req.session.name,
-      map_id: req.session.map_id
-     };
-     console.log('TEMPVAR->', templateVars)
-     console.log('MAP_ID->', req.session.map_id)
-    const user_id = req.session.id;
-    console.log('MAPID--->', map_id)
-    const { title, description } = req.body;
-    let queryString = `
-    UPDATE maps
-    SET title = $1, description = $2, last_edited_on = now()::date, last_edited_by = $3
-    WHERE id = $4;
-    `;
-    db.query(queryString, [title, description, user_id, map_id]).then(
-      (data) => {
-        res.render('index', templateVars);
-      }
-    );
-  });
+
 
   // ------ Add Coords ------
 
