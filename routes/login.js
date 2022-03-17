@@ -2,7 +2,17 @@ const express = require('express');
 const router = express.Router();
 const cookieSession = require('cookie-session');
 const bodyParser = require('body-parser');
-const { checkLogin } = require('./helper_functions');
+const {
+  getAllMaps,
+  getUserMaps,
+  getMapByLike,
+  getFavs,
+  getCoords,
+  getMapCoordsByTitle,
+  addFav,
+  checkLogin,
+  getNameFromDB
+} = require('./helper_functions');
 
 module.exports = (db) => {
 
@@ -42,17 +52,27 @@ module.exports = (db) => {
   });
 
   router.post('/login', (req, res) => {
-    let templateVars = {};
+
 
     const isEmailInDb = checkLogin(req.body, db);
     isEmailInDb
       .then((data) => {
-        console.log(data.id);
-        req.session.id = data.id;
-        console.log(req.session.id);
+        req.session.id = data.id
         templateVars = { user: req.session.id };
+        const user_id = req.session.id
+        getNameFromDB(user_id, db).then((name) => {
+          req.session.name = name
+        })
+        getUserMaps(user_id, db).then((maps) => {
+          req.session.map = maps
+        })
+        getFavs(user_id, db).then((favs) => {
+          req.session.favs = favs
+          const templateVars = { user: req.session.id, user_maps: req.session.map, fav_maps: req.session.favs, name: req.session.name }
+          console.log('LOGIN =====>', templateVars)
         res.render('index', templateVars);
         return;
+        })
       })
       .catch((err) => {
         res

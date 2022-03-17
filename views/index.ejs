@@ -9,11 +9,14 @@
   <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
   <link rel="stylesheet" href="/styles/main.css" type="text/css" />
 
+  <!-- Font Awesome-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
 
   <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
   <script type="text/javascript" src="/scripts/temp_app.js"></script>
@@ -29,11 +32,35 @@
 
 
 <body>
+
   <div class="map-container">
+    <% if (user) { %>
+    <div class="profile-card">
+      <div class="title"><%= name.name %></div>
+      <p class="sub-title"><%= name.name %>'s Maps</p>
+      <ul id="users-list">
+        <% user_maps.map(function(maps, i){ %>
+        <li>
+             <%- `<a href=''>${user_maps[i].title}</a>` %>
+        </li>
+            <% }); %>
+      </ul>
+      <p class="sub-title"><%= name.name %>'s Favourite Maps</p>
+      <ul id="favs-list">
+        <% fav_maps.map(function(maps, i){ %>
+        <li>
+             <%- `<a href=''>${fav_maps[i].title}</a>` %>
+        </li>
+            <% }); %>
+      </ul>
+    </div>
+    <% } %>
     <div class="map-options-container">
       <%- include('partials/map-options') %>
     </div>
   <div class="map-and-list">
+    <div class="add-favs">
+    </div>
     <div id="map"></div>
     <%- include('partials/map') %>
   </div>

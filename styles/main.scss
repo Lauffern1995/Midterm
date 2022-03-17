@@ -1,3 +1,5 @@
+$white: #fff;
+
 html, body {
   margin: 0;
   padding: 0;
@@ -18,13 +20,61 @@ html, body {
   #map {
     height: 25em;
     width: 25em;
-    margin: 1.5rem;
     border: 2px solid hsl(261, 40%, 39%);
     box-shadow: 5px 20px 50px rgba(0, 0, 0, 0.776);
     border-radius: 1em;
     z-index: 10;
   }
 }
+
+.profile-card {
+  padding-top: 1em;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-content: flex-start;
+  background-image: linear-gradient(to bottom right, #ff3c00 0%, #fd802c 74%);
+  margin: 0em, 1em, 0em, 1em;
+  text-align: center;
+  color: $white;
+  height: 500px;
+  width: 15em;
+  z-index: 10;
+  border: 2px solid hsl(261, 40%, 39%);
+  border-radius: 1em;
+  font-family: "Lato" sans-serif;
+  font-weight: 400;
+}
+
+.profile-card > .title {
+  font-size: 25px;
+  color: $white;
+}
+
+.fa-brands {
+  font-size: 25px;
+  color: $white;
+}
+
+.sub-title {
+  font-size: 18px;
+  color: $white
+}
+
+
+
+#star {
+color: hsl(261, 40%, 39%);
+
+}
+
+
+#star:hover {
+  color: gold;
+
+  }
+
+
 
 
 

@@ -17,6 +17,30 @@ const checkLogin = function (user, db) {
     });
 };
 
+
+const getNameFromDB =function (user_id, db) {
+  return db
+    .query(
+      `
+  SELECT name
+  FROM users
+  WHERE users.id = $1;
+  `,
+      [user_id]
+    )
+    .then((user) => {
+      return user.rows[0];
+    })
+    .catch((err) => {
+      console.log('err', err);
+    });
+};
+
+
+
+
+
+
 // ******************* MAP HELPERS *********************//
 const getAllMaps = function (db) {
   return db
@@ -70,6 +94,7 @@ getUserMaps = function (user_id, db) {
     SELECT *
     FROM maps
     WHERE user_id = $1
+    LIMIT 5;
   `,
       [user_id]
     )
@@ -85,7 +110,8 @@ const getFavs = function (user_id, db) {
   FROM maps
   JOIN users ON users.id = maps.user_id
   JOIN favourite_maps ON users.id = favourite_maps.user_id
-  WHERE users.id = $1;
+  WHERE users.id = $1
+  LIMIT 5;
   `,
       [user_id]
     )
@@ -214,4 +240,5 @@ module.exports = {
   getUserMaps,
   getMapCoordsByTitle,
   postCoordsToDB,
+  getNameFromDB
 };

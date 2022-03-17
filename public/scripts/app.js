@@ -43,7 +43,7 @@ $(document).ready(function () {
     map.removeOverlay(marker);
   });
 
-  /remove markers
+  //remove markers
   google.maps.event.addListener(map, 'dblclick', function (e) {
     console.log(e);
   });
@@ -81,4 +81,3 @@ $(document).ready(function () {
         console.log('err', err);
       });
     };
-});
