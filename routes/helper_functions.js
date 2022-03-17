@@ -42,6 +42,7 @@ const getAllMaps = function (db) {
       `
   SELECT title
   FROM maps
+  LIMIT 5;
   `
     )
     .then((res) => res.rows);
@@ -68,7 +69,8 @@ const getMapByLike = function (title, db) {
       `
   SELECT *
   FROM maps
-  WHERE title LIKE $1;
+  WHERE title LIKE $1
+  LIMIT 5;
   `,
       ['%' + title + '%']
     )

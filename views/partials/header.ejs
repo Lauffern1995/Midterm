@@ -2,13 +2,12 @@
 
 <nav>
   <div class="nav-logo">WikiMaps</div>
-  <i class="fa-brands fa-wikipedia-w"></i>
   <div class="nav-prompt">
 
     <% if (user) { %>
       <form method="POST" action="/logout" class="logout-form">
         <div class="form-group form-inline">
-          <label>Logged In As: <%= name.name %> </label>
+          <label>UserName <%= name.name %> </label>
           <button type="submit" class="" style="margin: 1em">Logout</button>
         </div>
       </form>

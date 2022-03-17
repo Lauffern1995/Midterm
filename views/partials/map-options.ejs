@@ -3,10 +3,16 @@
 <div class="map-options-container" style="border: 2px solid black">
 
   <div class="form-container">
-    <form action="/create_map" method="POST">
-      <input type="text" name="title" placeholder="Name your map!" >
-      <input type="text" name="description" placeholder="What's this map about?">
-      <button>Add Map</button>
+    <form class="create-map-form" action="/create_map" method="POST">
+      <div class="form-input">
+        <input class="map-form-input" type="text" id="name-your-map" name="title" placeholder="Name your map!" >
+        <label for="name-your-map" class="form__label">Name Your Map</label>
+      </div>
+      <div class="form-input">
+        <input class="map-form-input" type="text" id="map-about" name="description" placeholder="What's this map about?">
+        <label for="map-about" class="form__label">Add Description</label>
+      </div>
+        <button>Add Map</button>
     </form>
   </div>
 
@@ -24,28 +30,50 @@
         <input class="map-form-input" type="text" id="update-map_id" name="map_id" placeholder="Which Map">
         <label for="update-map_id" class="form__label">Name</label>
       </div>
-        <button>Update Map</button>
+        <button class="test-button">Update Map</button>
+    </form>
+  </div>
+<div class="form-container">
+    <!-- <form action="/user_maps" method="POST">
+      <button>Get Your Maps!</button>
+    </form> -->
+
+    <!-- <form action="/fav_maps" method="POST" class="map_form">
+      <input type="text" name="title" placeholder="Get Your Fav Maps!">
+      <button>Fav Maps</button>
+    </form> -->
+
+    <div class="form-container">
+      <form class="create-map-form" action="/search_map" method="POST">
+        <div class="form-input">
+        <input class="map-form-input" type="text" id="search-your-map" name="title" placeholder="Search For Map!">
+      <label for="search-your-map" class="form__label">Search for a Map</label>
+    </div>
+      <button class="test-button">Search Maps</button>
     </form>
   </div>
 
-    <form action="/user_maps" method="POST">
-      <button>Get Your Maps!</button>
-    </form>
 
-    <form action="/fav_maps" method="POST" class="map_form">
-      <input type="text" name="title" placeholder="Get Your Fav Maps!">
-      <button>Fav Maps</button>
-    </form>
+      <div class="search-map-list">
+        <% if (locals.maps) { %>
+          <ul id="map-list">
+            <% maps.map(function(map, i){ %>
+              <li>
+              <% console.log('inside ejs', map.title) %>
 
-    <form action="/search_map" method="POST" class="map_form">
-      <input type="text" name="title" placeholder="Search For Map!">
-      <button>Search Maps</button>
-    </form>
+               <%- `<a class='map-list-item'>${map.title}</a>` %>
+              </li>
+              <% }); %>
+            </ul>
+        <% } else { %>
+        <ul id="map-list">
+        </ul>
+        <% } %>
 
-    <form action="/add_fav" method="POST" class="map_form">
-      <button> <i id="star" class="fa-solid fa-star"></i>Make This Sexy Map One of Your Favs!   <i id="star" class="fa-solid fa-star"></i></button>
-    </form>
+    </div>
 
-
-
+    <!-- <form action="/add_fav" method="POST" class="map_form">
+      <button> <i id="star" class="fa-solid fa-star"></i> Favourite This Map <i id="star" class="fa-solid fa-star"></i></button>
+    </form> -->
+</div>
 </div>
