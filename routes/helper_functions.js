@@ -17,8 +17,7 @@ const checkLogin = function (user, db) {
     });
 };
 
-
-const getNameFromDB =function (user_id, db) {
+const getNameFromDB = function (user_id, db) {
   return db
     .query(
       `
@@ -35,11 +34,6 @@ const getNameFromDB =function (user_id, db) {
       console.log('err', err);
     });
 };
-
-
-
-
-
 
 // ******************* MAP HELPERS *********************//
 const getAllMaps = function (db) {
@@ -278,10 +272,7 @@ module.exports = {
   getUserMaps,
   getMapCoordsByTitle,
   postCoordsToDB,
-<<<<<<< HEAD
-  getNameFromDB
-=======
+  getNameFromDB,
   getMapByTitle,
   addCoordsByMapId,
->>>>>>> midterm-save-mar-17
 };
