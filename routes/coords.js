@@ -16,20 +16,22 @@ const bodyParser = require('body-parser');
 
 module.exports = (db) => {
   router.post('/', (req, res) => {
-    console.log(req.body);
+    console.log('COORDSPOST==>', req.body);
     const user_id = req.session.id;
+
     const { title, map_id, latitude, longitude } = req.body;
     postCoordsToDB(title, map_id, user_id, latitude, longitude, db);
   });
 
   router.delete('/', (req, res) => {
-    console.log('body', req.body.coordId);
+    console.log("HEREbody==>", req.body.coordId);
     const id = req.body.coordId;
     return db
       .query(
         `
-  DELETE FROM coords WHERE title = $1
-  `,
+        DELETE FROM coords
+        WHERE title = $1
+        `,
         [id]
       )
       .then(() => {

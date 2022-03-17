@@ -9,12 +9,9 @@ const {
   getCoords,
   getMapCoordsByTitle,
   addFav,
-<<<<<<< HEAD
-  getNameFromDB
-=======
+  getNameFromDB,
   getMapByTitle,
   addCoordsByMapId,
->>>>>>> midterm-save-mar-17
 } = require('./helper_functions');
 const coords = require('./coords');
 
@@ -44,26 +41,7 @@ module.exports = (db) => {
         };
 
     const mapName = req.params;
-
     const coords = getMapCoordsByTitle(mapName, db);
-
-<<<<<<< HEAD
-    return coords.then((coords) => {
-      // console.log('COORDS ===> ', coords);
-      // console.log('MAP coords===>', coords[0].map_id);
-
-      // req.session.map_id = coords[0].map_id;;
-      templateVars = {
-        user: req.session.id,
-        coords: coords,
-        map_id: req.session.map_id,
-        user_maps: req.session.map,
-        fav_maps: req.session.favs
-      };
-
-      res.json(templateVars);
-    });
-=======
     return coords
       .then((coords) => {
         console.log('GET COORDS TITLE', coords);
@@ -78,7 +56,6 @@ module.exports = (db) => {
       .catch((err) => {
         console.log('err in map name route', err);
       });
->>>>>>> midterm-save-mar-17
   });
 
   // ------ Get Users Created Maps (List) ------
@@ -173,17 +150,11 @@ module.exports = (db) => {
         });
       });
     });
-    // let queryString = `
-    //   INSERT INTO coords (user_id, title, description)
-    //   VALUES ($1, $2, $3, now()::date) RETURNING *;
-    // `;
-    // db.query(queryString, [user_id, 'test', map_id, 0, 0]).then((data) => {
-    //   res.render('index', templateVars);
-    // });
   });
 
   // ------ Update A Map ------
   router.post('/update_map', (req, res) => {
+    console.log('HERE_____---___----', req.body)
     const templateVars = {
       user: req.session.id,
       user_maps: req.session.map,
