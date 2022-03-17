@@ -16,6 +16,7 @@ const bodyParser = require('body-parser');
 
 module.exports = (db) => {
   router.post('/', (req, res) => {
+    console.log(req.body);
     const user_id = req.session.id;
     const { title, map_id, latitude, longitude } = req.body;
     postCoordsToDB(title, map_id, 1, latitude, longitude, db);
