@@ -49,11 +49,12 @@ $(document).ready(function () {
 
   $('#update-map').click(function (e) {
     e.preventDefault();
-    const input = $('#update-description').val();
+    const title = $('#update-title').val();
+    const description = $('#update-description').val();
     $.ajax({
       method: 'POST',
       url: '/map_update',
-      data: { currentMapId, input }
+      data: { currentMapId, title, description}
 
 
     }).then(()=>{

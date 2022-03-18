@@ -20,7 +20,9 @@ module.exports = (db) => {
 
     const user_id = req.session.id;
 
+    console.log('BODY', req.body);
     const { input, map_id } = req.body;
+
     let queryString = `
     UPDATE maps
     SET title = $1, description = $2, last_edited_on = now()::date, last_edited_by = $3
