@@ -93,31 +93,31 @@ console.log('fav_maps --> ', templateVars.fav_maps)
   // -------- Make This Map One of Your Favs! ------- ///
 
 
-  // ------ Create A Map ------
-  router.post('/create_map', (req, res) => {
-    const templateVars = {
-      user: req.session.id,
-      user_maps: req.session.map,
-      fav_maps: req.session.favs,
-      name: req.session.name
-     };
-    const user_id = req.session.id;
-    const { title, description } = req.body;
-    let queryString = `
-      INSERT INTO maps (user_id, title, description, date_created)
-      VALUES ($1, $2, $3, now()::date) RETURNING *;
-    `;
-    db.query(queryString, [user_id, title, description]).then((data) => {
-      mapTitle = data.rows[0].title;
-      getMapByTitle(mapTitle, db).then((data) => {
-        coord_id = data[0].id;
-        addCoordsByMapId(coord_id, user_id, db).then((data) => {
+  // // ------ Create A Map ------
+  // router.post('/create_map', (req, res) => {
+  //   const templateVars = {
+  //     user: req.session.id,
+  //     user_maps: req.session.map,
+  //     fav_maps: req.session.favs,
+  //     name: req.session.name
+  //    };
+  //   const user_id = req.session.id;
+  //   const { title, description } = req.body;
+  //   let queryString = `
+  //     INSERT INTO maps (user_id, title, description, date_created)
+  //     VALUES ($1, $2, $3, now()::date) RETURNING *;
+  //   `;
+  //   db.query(queryString, [user_id, title, description]).then((data) => {
+  //     mapTitle = data.rows[0].title;
+  //     getMapByTitle(mapTitle, db).then((data) => {
+  //       coord_id = data[0].id;
+  //       addCoordsByMapId(coord_id, user_id, db).then((data) => {
 
-          res.render('index', templateVars);
-        });
-      });
-    });
-  });
+  //         res.render('index', templateVars);
+  //       });
+  //     });
+  //   });
+  // });
 
 
 

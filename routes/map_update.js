@@ -1,14 +1,14 @@
 const express = require('express');
 const router = express.Router();
 const cookieSession = require('cookie-session');
-const { getCoords, postCoordsToDB } = require('./helper_functions');
+const { getCoords, postCoordsToDB, getFavs } = require('./helper_functions');
 const bodyParser = require('body-parser');
 
 module.exports = (db) => {
   // ------ Update A Map ------
   router.post('/', (req, res) => {
 
-    const templateVars = {
+    let templateVars = {
       user: req.session.id,
       user_maps: req.session.map,
       fav_maps: req.session.favs,
@@ -17,22 +17,30 @@ module.exports = (db) => {
      };
 
 
-
     const user_id = req.session.id;
 
-    console.log('BODY', req.body);
-    const { input, map_id } = req.body;
+    const { currentMapId, title, description } = req.body;
 
     let queryString = `
     UPDATE maps
     SET title = $1, description = $2, last_edited_on = now()::date, last_edited_by = $3
     WHERE id = $4;
     `;
-    db.query(queryString, [title, description, user_id, map_id]).then(
+    db.query(queryString, [title, description, user_id, currentMapId]).then(
       () => {
-        res.render('index', templateVars);
-      }
-    );
+          getFavs(user_id, db).then(()=> {
+
+            templateVars = {
+             user: req.session.id,
+             user_maps: req.session.map,
+             fav_maps: req.session.favs,
+             name: req.session.name,
+             map_id: req.session.map_id
+            };
+
+           res.render('index', templateVars);
+          })
+      });
   });
   return router;
 }
