@@ -41,7 +41,7 @@
       <div class="animate-charcter">
         <%= name.name %>
       </div>
-      <div class="current-map">Current Map</div>
+      <div id="current-map">Current Map</div>
       </div>
       <div class="user-map-container">
       <p class="sub-title">You Have <%= user_maps.length %> <% if (user_maps.length >= 2) { %> Maps <% } else { %> Map <% } %></p>
@@ -58,7 +58,7 @@
       <ul class="no-bullet-list">
         <% fav_maps.map(function(maps, i){ %>
         <li>
-             <%- `<a href=''>${fav_maps[i].title}</a>` %>
+             <%- `<a href=''>${maps.title}</a>` %>
         </li>
             <% }); %>
       </ul>

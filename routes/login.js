@@ -11,11 +11,10 @@ const {
   getMapCoordsByTitle,
   addFav,
   checkLogin,
-  getNameFromDB
+  getNameFromDB,
 } = require('./helper_functions');
 
 module.exports = (db) => {
-
   router.get('/', (req, res) => {
     res.render('login');
   });
@@ -52,27 +51,31 @@ module.exports = (db) => {
   });
 
   router.post('/login', (req, res) => {
-
-
     const isEmailInDb = checkLogin(req.body, db);
     isEmailInDb
       .then((data) => {
-        req.session.id = data.id
+        req.session.id = data.id;
         templateVars = { user: req.session.id };
-        const user_id = req.session.id
+        const user_id = req.session.id;
         getNameFromDB(user_id, db).then((name) => {
-          req.session.name = name
-        })
+          req.session.name = name;
+        });
         getUserMaps(user_id, db).then((maps) => {
-          req.session.map = maps
-        })
+          req.session.map = maps;
+        });
         getFavs(user_id, db).then((favs) => {
-          req.session.favs = favs
-          const templateVars = { user: req.session.id, user_maps: req.session.map, fav_maps: req.session.favs, name: req.session.name }
-          console.log('LOGIN =====>', templateVars)
-        res.render('index', templateVars);
-        return;
-        })
+          console.log('IN LOGIN', favs);
+          req.session.favs = favs;
+          const templateVars = {
+            user: req.session.id,
+            user_maps: req.session.map,
+            fav_maps: favs,
+            name: req.session.name,
+          };
+          console.log('LOGIN =====>', templateVars);
+          res.render('index', templateVars);
+          return;
+        });
       })
       .catch((err) => {
         res
@@ -80,10 +83,7 @@ module.exports = (db) => {
           .send('Email not registered, Please <a href="/login">register!</a>');
         return;
       });
-
   });
 
   return router;
 };
-
-

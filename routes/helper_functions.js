@@ -102,11 +102,10 @@ const getFavs = function (user_id, db) {
   return db
     .query(
       `
-  SELECT maps.title
+  SELECT DISTINCT maps.title
   FROM maps
-  JOIN users ON users.id = maps.user_id
-  JOIN favourite_maps ON users.id = favourite_maps.user_id
-  WHERE users.id = $1
+  JOIN favourite_maps ON maps.user_id = favourite_maps.user_id
+  WHERE maps.user_id = $1
   LIMIT 5;
   `,
       [user_id]
@@ -116,12 +115,12 @@ const getFavs = function (user_id, db) {
 
 // -------- Insert Favourite Map for User ------ //
 
-const addFav = function (user_id, db) {
+const addFav = function (user_id, map_id, db) {
   return db
     .query(
       `
       INSERT INTO favourite_maps (user_id, map_id)
-      VALUES ($1, $2) RETURNING *;
+      VALUES ($1, $2);
       `,
       [user_id, map_id]
     )

@@ -32,14 +32,7 @@
     </form>
   </div>
 <div class="form-container">
-    <!-- <form action="/user_maps" method="POST">
-      <button>Get Your Maps!</button>
-    </form> -->
 
-    <!-- <form action="/fav_maps" method="POST" class="map_form">
-      <input type="text" name="title" placeholder="Get Your Fav Maps!">
-      <button>Fav Maps</button>
-    </form> -->
 
     <div class="form-container">
       <form class="create-map-form" action="/search_map" method="POST">
@@ -57,7 +50,7 @@
           <ul id="map-list">
             <% maps.map(function(map, i){ %>
               <li>
-              <!-- <% console.log('inside ejs', map.title) %> -->
+
 
                <%- `<a class='map-list-item'>${map.title}</a>` %>
               </li>
@@ -70,8 +63,5 @@
 
     </div>
 
-    <!-- <form action="/add_fav" method="POST" class="map_form">
-      <button> <i id="star" class="fa-solid fa-star"></i> Favourite This Map <i id="star" class="fa-solid fa-star"></i></button>
-    </form> -->
 </div>
 </div>

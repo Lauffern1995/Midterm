@@ -31,10 +31,8 @@ module.exports = (db) => {
       name: req.session.name,
       map_id: req.session.map_id
     }
-
+console.log('fav_maps --> ', templateVars.fav_maps)
     res.render('index', templateVars);
-
-
 
   });
 
@@ -91,47 +89,9 @@ module.exports = (db) => {
   });
 
   // ------ Get Users Favorite Maps (List) ------
-  router.post('/fav_maps', (req, res) => {
-    let templateVars = {
-      user: req.session.id,
-      user_maps: req.session.map,
-      fav_maps: req.session.favs
-     };
-    let user_id = req.session.id;
-
-    const mapList = getFavs(user_id, db);
-    mapList.then((maps) => {
-      // console.log()
-      templateVars = {
-         user: req.session.id,
-         maps: maps, user_maps: req.session.map,
-        fav_maps: req.session.favs
-      };
-
-      res.render('index', templateVars);
-    });
-  });
 
   // -------- Make This Map One of Your Favs! ------- ///
 
-  router.post('/add_fav', (req, res) => {
-    const templateVars = {
-      user: req.session.id,
-      map_id: req.session.map_id,
-      user_maps: req.session.map,
-      fav_maps: req.session.favs
-     };
-    const user_id = req.session.id;
-    const map_id = req.session.map_id;
-
-    let queryString = `
-    INSERT INTO favourite_maps (user_id, map_id)
-    VALUES ($1, $2) RETURNING *;
-    `;
-    db.query(queryString, [user_id, map_id]).then((data) => {
-      res.render('index', templateVars);
-    });
-  });
 
   // ------ Create A Map ------
   router.post('/create_map', (req, res) => {

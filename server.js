@@ -48,7 +48,6 @@ app.use(
 
 const indexRoute = require('./routes/index');
 const loginRoute = require('./routes/login');
-const registerRoute = require('./routes/register');
 const usersRoute = require('./routes/users');
 const mapsRoute = require('./routes/maps');
 // const map_createRoute = require("./routes/map_create");
@@ -56,11 +55,11 @@ const map_listRoute = require('./routes/map_list');
 const mapsSearchRoute = require('./routes/maps_search');
 const mapWithCoords = require('./routes/coords');
 const updateMap = require('./routes/map_update');
+const addMapToFav = require('./routes/add_fav');
 
 // ------- Routes Mounted -------
 
 app.use('/login', loginRoute(db));
-app.use('/register', registerRoute(db));
 app.use('/maps', mapsRoute(db));
 app.use('/api/users', usersRoute(db));
 // app.use("/map_create", map_createRoute(db));
@@ -68,6 +67,7 @@ app.use('/map_list', map_listRoute(db));
 app.use('/maps/maps_search', mapsSearchRoute(db));
 app.use('/coords_post', mapWithCoords(db));
 app.use('/map_update', updateMap(db));
+app.use('/add_fav', addMapToFav(db));
 app.use('/', indexRoute(db));
 
 // ------- Server Mounted -------

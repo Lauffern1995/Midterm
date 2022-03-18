@@ -32,6 +32,7 @@ $(document).ready(function () {
     e.preventDefault();
 
     let url = $(this).text();
+    console.log('URL --->', url)
     $('#current-map').text(url)
     currentMapName = url;
     map = new google.maps.Map(document.getElementById('map'), {
@@ -62,6 +63,23 @@ $(document).ready(function () {
     .catch((err) => {
       console.log('err', err);
     });
+  });
+
+  $('#add_favs').click(function (e) {
+    e.preventDefault();
+
+    $.ajax({
+      method: 'POST',
+      url: '/add_fav',
+      data: { currentMapId } ,
+    })
+      .then(() => {
+        console.log('CLIENT SIDE HERE');
+        $(".no-bullet-list").append(`<a href=''>${currentMapName}</a>`);
+      })
+      .catch((err) => {
+        console.log('err', err);
+      });
   });
 
   // ~~~~~~~~~~~~~~ Creates NEW marker ~~~~~~~~~~~~~~~~~~
@@ -143,6 +161,7 @@ $(document).ready(function () {
         markers = {};
         if (data.coords.length) {
           currentMapId = data.coords[0].map_id;
+          console.log('MAP ID --->', currentMapId)
           data.coords.forEach((coord) => {
             const markerLatLng = getLatLng(coord.latitude, coord.longitude);
             createMarker(coord.title, markerLatLng);
