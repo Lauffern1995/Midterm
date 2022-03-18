@@ -7,7 +7,7 @@ VALUES (1, 'My First Map', 'This is my first description', '12-03-2022', '2022-0
 (5, 'Trucker Protests', 'Cya Later', '2022-03-12', '2022-03-12', 2),
 (6 ,'Missile Silos', 'Probably not Missile Silos', '2022-03-12', '2022-03-12', 3),
 (7 ,'Favourite Restaurants', 'Belly full', '2022-03-12', '2022-03-12', 3),
-(1 ,'Best Karate', 'Kung Fu Fighting', '2022-03-12', '2022-03-12', 3);
+(7 ,'Best Karate', 'Kung Fu Fighting', '2022-03-12', '2022-03-12', 3);
 
 
 

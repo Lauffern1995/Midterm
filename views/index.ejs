@@ -19,9 +19,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Concert+One&display=swap" rel="stylesheet">
 
 
-  <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
-  <script type="text/javascript" src="/scripts/temp_app.js"></script>
-  <script type="text/javascript" src="/scripts/init_map.js"></script>
+  <!-- <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script> -->
+  <!-- <script type="text/javascript" src="/scripts/temp_app.js"></script>
+  <script type="text/javascript" src="/scripts/init_map.js"></script> -->
 
 
 </head>
@@ -33,7 +33,6 @@
 
 
 <body>
-
   <div class="map-container">
     <% if (user) { %>
     <div class="profile-card">
@@ -75,7 +74,11 @@
     <div id="map"></div>
     <%- include('partials/map') %>
   </div>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDtIjXHDQ9Blne5H3PfOpa1xohVP5gbpS4"
+  ></script>
+  <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
+  <script type="text/javascript" src="/scripts/temp_app.js"></script>
+  <script type="text/javascript" src="/scripts/init_map.js"></script>
 </div>
-  <%- include('partials/footer') %>
 </body>
 </html>

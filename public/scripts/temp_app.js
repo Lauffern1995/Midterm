@@ -19,18 +19,18 @@ $(document).ready(function () {
   const initMap = () => {
     map.addListener('click', (event) => {
       createNewMarker(event.latLng);
-      renderMarkers(markers);
+      // deleteMarkers(markers);
     });
   };
 
-  setTimeout(() => {
+
     initMap();
-  }, 200);
+
 
   // Listens for map & Loads Map clicked on in the list
   $('.map-list-item').click(function (e) {
     e.preventDefault();
-    console.log('HERE');
+
     let url = $(this).text();
     $('#current-map').text(url)
     currentMapName = url;
@@ -40,18 +40,26 @@ $(document).ready(function () {
     });
 
     getMarkersFromDb(url);
-    // renderMarkers();
+    initMap();
+    // deleteMarkers();
   });
 
 
 
   $('#update-map').click(function (e) {
     e.preventDefault();
+    const input = $('#update-description').val();
     $.ajax({
       method: 'POST',
       url: '/map_update',
-      data: { currentMapId }
-    }).catch((err) => {
+      data: { currentMapId, input }
+
+
+    }).then(()=>{
+
+      console.log('CLIENT SIDE HERE')
+    })
+    .catch((err) => {
       console.log('err', err);
     });
   });
@@ -66,10 +74,13 @@ $(document).ready(function () {
     });
     //Attaches delete listener (MUST STAY HERE)
     marker.addListener('dblclick', function () {
+      console.log('MARKER LISTENER', markers, title,markers[title].title)
       markers[title].setMap(null);
+      deleteMarkers(markers[title].title)
       deleteMarkerFromDb(markers[title].title);
     });
     markers[title] = marker;
+    markers[title].setMap(map);
   }
 
   // Creates Marker if NOT already in map
@@ -114,10 +125,12 @@ $(document).ready(function () {
       method: 'DELETE',
       url: '/coords_post',
     }).then(() => {
-      console.log('WHAT IS THIS COORD NAME',coordId);
+
       deletedCoord.push(coordId);
-      getMarkersFromDb(currentMapName);
-    });
+      // getMarkersFromDb(currentMapName);
+    }).catch((err) => {
+      console.log('ERROR', err)
+    })
   };
 
   // GET Markers from database and render to map
@@ -128,33 +141,32 @@ $(document).ready(function () {
     })
       .then((data) => {
         markers = {};
-        console.log(data);
         if (data.coords.length) {
           currentMapId = data.coords[0].map_id;
-          console.log(currentMapId);
           data.coords.forEach((coord) => {
             const markerLatLng = getLatLng(coord.latitude, coord.longitude);
             createMarker(coord.title, markerLatLng);
           });
         } else {
-          console.log(data);
           currentMapId = data.map_id;
-          console.log('FAKE');
         }
       })
-      .then(() => {
-        console.log(markers);
-        initMap();
-        renderMarkers();
-      });
+      // .then(() => {
+      //   initMap();
+      //   deleteMarkers();
+      // });
   };
 
   //Renders all markers in markers object
-  const renderMarkers = function () {
+  const deleteMarkers = function () {
+    console.log('COORD ARRAY', deletedCoord)
+    console.log('MARKERS', markers);
+
     for (const marker in markers) {
       if (!deletedCoord.includes(markers[marker].title)) {
-        console.log('Inside Rendered Markers', deletedCoord)
-        markers[marker].setMap(map);
+        const index = deletedCoord.indexOf(markers[marker].title)
+        deletedCoord.splice(index, 1)
+        // markers[marker].setMap(map);
       }
     }
   };
